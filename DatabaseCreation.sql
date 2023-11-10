@@ -57,9 +57,25 @@ CREATE TABLE Instructor(
 
 CREATE TABLE Instructor_Course (
     course_id INT FOREIGN KEY REFERENCES Course(course_id),
-    instrucor_id INT FOREIGN KEY REFERENCES Instructor(instructor_id),
+    instructor_id INT FOREIGN KEY REFERENCES Instructor(instructor_id),
     CONSTRAINT pk_Instructor_Course PRIMARY KEY (
         course_id,
-        instrucor_id
+        instructor_id
     )
+)
+
+
+CREATE TABLE Student_Instructor_Course_Take(
+    student_id INT FOREIGN KEY REFERENCES Student(student_id),
+    course_id INT FOREIGN KEY REFERENCES Course(course_id),
+    instructor_id INT FOREIGN KEY REFERENCES Instructor(instructor_id),
+    semester_code VARCHAR(40),
+    exam_type VARCHAR(40),
+    grade INT ,-- QUESTION 4
+    CONSTRAINT pk_Student_Instructor_Course_Take PRIMARY KEY(
+        student_id,
+        course_id,
+        instructor_id
+    )
+
 )
