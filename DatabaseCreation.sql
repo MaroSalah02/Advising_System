@@ -113,6 +113,3 @@ CREATE TABLE Slot(
     course_id INT FOREIGN KEY REFERENCES Course(course_id),
     instructor_id INT FOREIGN KEY REFERENCES Instructor(instructor_id) 
 )
-
-
-
