@@ -79,3 +79,10 @@ CREATE TABLE Student_Instructor_Course_Take(
     )
 
 )
+
+
+CREATE TABLE Semester(
+    semester_code VARCHAR(40) PRIMARY KEY,
+    start_date DATETIME,
+    end_date DATETIME
+)
