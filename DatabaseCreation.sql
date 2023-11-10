@@ -86,3 +86,33 @@ CREATE TABLE Semester(
     start_date DATETIME,
     end_date DATETIME
 )
+
+
+CREATE TABLE Course_Semester(
+    course_id INT FOREIGN KEY REFERENCES Course(course_id),
+    semester_code VARCHAR(40) FOREIGN KEY REFERENCES Semester(semester_code),
+    CONSTRAINT pk_Course_Semester PRIMARY KEY(
+        course_id,
+        semester_code
+    )
+)
+
+CREATE TABLE Advisor(
+    advisor_id INT PRIMARY KEY IDENTITY,
+    name VARCHAR(40),
+    email VARCHAR(40),
+    office VARCHAR(40),
+    password VARCHAR(40)
+)
+
+CREATE TABLE Slot(
+    slot_id INT PRIMARY KEY IDENTITY,
+    day INT, -- Question 5
+    time TIME,
+    location VARCHAR(40),
+    course_id INT FOREIGN KEY REFERENCES Course(course_id),
+    instructor_id INT FOREIGN KEY REFERENCES Instructor(instructor_id) 
+)
+
+
+
