@@ -107,9 +107,81 @@ CREATE TABLE Advisor(
 
 CREATE TABLE Slot(
     slot_id INT PRIMARY KEY IDENTITY,
-    day VARCHAR(40),
-    time INT CONSTRAINT check_time CHECK (time BETWEEN 1 AND 5),
+    day VARCHAR(40), -- Question 5
+    time INT CONSTRAINT check_time CHECK (time BETWEEN 1 AND 5), -- Question 6
     location VARCHAR(40),
     course_id INT FOREIGN KEY REFERENCES Course(course_id),
     instructor_id INT FOREIGN KEY REFERENCES Instructor(instructor_id) 
+)
+
+
+create table Graduation_Plan(
+    plan_id int identity,
+    semster_code varchar(40),
+    semster_credit_hours int,
+    expected_grad_semster int,
+    advisor_id int FOREIGN KEY REFERENCES Advisor(advisor_id),
+    student_id int FOREIGN KEY REFERENCES Student(student_id),
+    constraint pk_Graduation_Plan PRIMARY KEY(
+        plan_id,
+        semster_code
+    )
+)
+
+
+CREATE TABLE GradPlan_Course(
+    plan_id int FOREIGN KEY REFERENCES Graduation_Plan(plan_id),
+    semster_code varchar(40) FOREIGN KEY REFERENCES Graduation_Plan(semster_code),
+    course_id int foreign key references Course
+    constraint pk_GradPlan_Course primary key(
+        plan_id,
+        semster_code,
+        course_id
+    )
+)
+
+CREATE TABLE Payment(
+    payment_id INT PRIMARY KEY IDENTITY,
+    amount DECIMAL, -- Question 9
+    deadline DATE,
+    n_installments INT,
+    status VARCHAR(40) default 'notPaid', -- Question 7
+    fund_percentage DECIMAL,
+    student_id INT FOREIGN KEY REFERENCES Student(student_id),
+    semester_code VARCHAR(40),
+)
+
+CREATE TABLE Installment(
+    payment_id INT FOREIGN KEY REFERENCES Payment(payment_id),
+    deadline DATE,
+    CONSTRAINT pk_Installment PRIMARY KEY (payment_id, deadline),
+    amount DECIMAL, -- Question 9
+    status VARCHAR(40) default 'notPaid',
+    start_date DATE
+)
+
+
+create table Request(
+    request_id INT primary key identity,
+    type varchar(40),
+    comment varchar(40),
+    status varchar(40) default 'pending',
+    credit_hours INT, -- Question 8
+    student_id INT FOREIGN KEY REFERENCES Student(student_id),
+    advisor_id INT FOREIGN KEY REFERENCES Advisor(advisor_id),
+    course_id INT
+)
+
+create table MakeUp_Exam(
+    exam_id INT primary key IDENTITY,
+    date DATE,
+    type VARCHAR(40),
+    course_id INT FOREIGN KEY REFERENCES Course(course_id)
+)
+
+create table Exam_Student(
+    exam_id INT FOREIGN KEY REFERENCES MakeUp_Exam(exam_id),
+    student_id INT FOREIGN KEY REFERENCES Student(student_id),
+    course_id INT,
+    primary key(exam_id, student_id) 
 )
