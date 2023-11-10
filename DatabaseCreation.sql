@@ -107,8 +107,8 @@ CREATE TABLE Advisor(
 
 CREATE TABLE Slot(
     slot_id INT PRIMARY KEY IDENTITY,
-    day INT, -- Question 5
-    time TIME,
+    day VARCHAR(40),
+    time INT CONSTRAINT check_time CHECK (time BETWEEN 1 AND 5),
     location VARCHAR(40),
     course_id INT FOREIGN KEY REFERENCES Course(course_id),
     instructor_id INT FOREIGN KEY REFERENCES Instructor(instructor_id) 
