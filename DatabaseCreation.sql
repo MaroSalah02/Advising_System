@@ -73,7 +73,7 @@ BEGIN
         instructor_id INT FOREIGN KEY REFERENCES Instructor(instructor_id),
         semester_code VARCHAR(40),
         exam_type VARCHAR(40),
-        grade INT ,-- QUESTION 4
+        grade VARCHAR(40) ,-- QUESTION 4 (Answered)
         CONSTRAINT pk_Student_Instructor_Course_Take PRIMARY KEY(
             student_id,
             course_id,
