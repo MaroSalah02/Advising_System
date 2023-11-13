@@ -1,5 +1,6 @@
 CREATE DATABASE Advising_Team_109
 -------------------
+go
 CREATE PROCEDURE CreateALLTABLE
 AS  
 BEGIN
