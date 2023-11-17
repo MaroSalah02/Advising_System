@@ -4,6 +4,15 @@ go
 CREATE PROCEDURE CreateALLTABLE
 AS  
 BEGIN
+    CREATE TABLE Advisor(
+        advisor_id INT PRIMARY KEY IDENTITY,
+        name VARCHAR(40),
+        email VARCHAR(40),
+        office VARCHAR(40),
+        password VARCHAR(40)
+    )
+
+    
     CREATE TABLE Student(
         student_id INT PRIMARY KEY IDENTITY,
         f_name VARCHAR(40) NOT NULL,
@@ -17,7 +26,7 @@ BEGIN
         semester INT,
         acquired_hours INT,
         assigned_hours INT,
-        --advisor_id INT FOREIGN KEY REFERENCES Advisor(advisor_id), 
+        advisor_id INT FOREIGN KEY REFERENCES Advisor(advisor_id), 
         CONSTRAINT check_gpa CHECK (gpa BETWEEN 0.7 AND 5)
     )
 
@@ -100,13 +109,6 @@ BEGIN
         )
     )
 
-    CREATE TABLE Advisor(
-        advisor_id INT PRIMARY KEY IDENTITY,
-        name VARCHAR(40),
-        email VARCHAR(40),
-        office VARCHAR(40),
-        password VARCHAR(40)
-    )
 
     CREATE TABLE Slot(
         slot_id INT PRIMARY KEY IDENTITY,
