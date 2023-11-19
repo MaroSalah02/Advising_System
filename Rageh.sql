@@ -209,6 +209,8 @@ FROM Student S
 GO
 Select * FROM view_Students
 
+
+
 -- 2.2 F
 GO
 CREATE VIEW Courses_MakeupExams(Course_Name , Course_Semster , Exam_ID , Exam_Date , Exam_Type , Course_ID)
@@ -221,4 +223,26 @@ Select * FROM Courses_MakeupExams
 
 
 
+-- 2.3 B
+GO
+CREATE PROCEDURE Procedures_AdvisorRegistration
+@Advisor_name VARCHAR(40),
+@Advisor_password VARCHAR(40),
+@Advisor_email VARCHAR(40),
+@Advisor_office VARCHAR(40), 
+@Advisor_id INT OUTPUT
+AS 
+SELECT @Advisor_id = A.advisor_id
+FROM Advisor A
+WHERE  @Advisor_name = A.name AND @Advisor_password = A.password AND @Advisor_email = A.email AND @Advisor_office = A.office 
+
+-- Some Insertions
+-- INSERT INTO Advisor VALUES('ahmed' , 'ahmed@yahoo.com' , 'c4.101' , '1234')
+-- INSERT INTO Advisor VALUES('allaa' , 'allaa@yahoo.com' , 'c5.203' , '0000')
+
+-- Testing The PROCEDURE
+-- Go
+-- declare @Advisor_id INT
+-- EXEC Procedures_AdvisorRegistration 'allaa' , '0000' , 'allaa@yahoo.com' , 'c5.203', @Advisor_id OUTPUT
+-- print @Advisor_id
 
