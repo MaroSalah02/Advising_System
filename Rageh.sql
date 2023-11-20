@@ -232,9 +232,11 @@ CREATE PROCEDURE Procedures_AdvisorRegistration
 @Advisor_office VARCHAR(40), 
 @Advisor_id INT OUTPUT
 AS 
+BEGIN
 SELECT @Advisor_id = A.advisor_id
 FROM Advisor A
 WHERE  @Advisor_name = A.name AND @Advisor_password = A.password AND @Advisor_email = A.email AND @Advisor_office = A.office 
+END
 
 -- Some Insertions
 -- INSERT INTO Advisor VALUES('ahmed' , 'ahmed@yahoo.com' , 'c4.101' , '1234')
@@ -246,3 +248,24 @@ WHERE  @Advisor_name = A.name AND @Advisor_password = A.password AND @Advisor_em
 -- EXEC Procedures_AdvisorRegistration 'allaa' , '0000' , 'allaa@yahoo.com' , 'c5.203', @Advisor_id OUTPUT
 -- print @Advisor_id
 
+
+
+-- 2.3 G
+GO
+CREATE PROCEDURE Procedures_AdminAddingCourse
+@Course_name VARCHAR(40),
+@Course_major VARCHAR(40),
+@Course_is_offered BIT,
+@Course_credit_hours INT,
+@Course_semester INT
+AS
+BEGIN
+INSERT INTO Course (name, major, is_offered, credit_hours, semester)
+VALUES (@Course_name, @Course_major, @Course_is_offered, @Course_credit_hours, @Course_semester)
+END
+
+-- Testing The PROCEDURE
+-- GO
+-- EXEC Procedures_AdminAddingCourse 'Networks' , 'MET' , 1 , 2 , 5
+
+-- SELECT * FROM Course
