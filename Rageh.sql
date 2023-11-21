@@ -84,23 +84,27 @@ BEGIN
    DECLARE @amount_to_be_paid DECIMAL(6)
    DECLARE @n_installments DECIMAL(1)
    DECLARE @fund_percentage DECIMAL(3)
-   
-   SELECT @amount_to_be_paid = p.amount,
-   @n_installments = p.n_installments,
-   @fund_percentage = p.fund_percentage
+   DECLARE @deadline DATETIME
+   SELECT @amount_to_be_paid = P.amount,
+   @n_installments = P.n_installments,
+   @fund_percentage = P.fund_percentage,
+   @deadline = P.deadline
    FROM Payment P
    WHERE @payment_id = P.payment_id
 
    SET @amount_to_be_paid = @amount_to_be_paid * (@fund_percentage / 100)
    SET @amount_to_be_paid = @amount_to_be_paid / @n_installments
-   
+
    DECLARE @COUNTER INT = 0
    WHILE @COUNTER < @n_installments
-   Begin
+   Begin     
+      DECLARE @start_date DATETIME
+      SET @start_date = DATEADD(MONTH, -1, @deadline)
       INSERT INTO Installment(payment_id, deadline, amount, start_date)
-      VALUES(@payment_id,TEMP, @amount_to_be_paid, CURRENT_TIMESTAMP) -- Temp to be checked later
+      VALUES(@payment_id, @deadline, @amount_to_be_paid, @start_date)
 
       SET @COUNTER = @COUNTER + 1
+      SET @deadline = @start_date
    END
 END
 
