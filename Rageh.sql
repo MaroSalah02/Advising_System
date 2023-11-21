@@ -82,7 +82,7 @@ CREATE PROCEDURE Procedures_AdminIssueInstallment
 AS
 BEGIN
    DECLARE @amount_to_be_paid DECIMAL(6)
-   DECLARE @n_installments DECIMAL(1)
+   DECLARE @n_installments INT
    DECLARE @fund_percentage DECIMAL(3)
    DECLARE @deadline DATETIME
    SELECT @amount_to_be_paid = P.amount,
@@ -107,6 +107,12 @@ BEGIN
       SET @deadline = @start_date
    END
 END
+
+--Testing The Procedure
+--INSERT INTO Student(f_name,l_name)values('ahmed','mohamad')
+--INSERT INTO Payment(amount,deadline,n_installments,fund_percentage,student_id)values(200000,'2023/12/25 10:50:30',2,50,1)
+--EXEC Procedures_AdminIssueInstallment 1
+--SELECT * FROM Installment
 
 
 
