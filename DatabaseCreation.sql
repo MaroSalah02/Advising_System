@@ -124,7 +124,7 @@ BEGIN
         plan_id int identity,
         semster_code varchar(40),
         semster_credit_hours int,
-        expected_grad_semster int,
+        expected_grad_date DATE,
         advisor_id int FOREIGN KEY REFERENCES Advisor(advisor_id),
         student_id int FOREIGN KEY REFERENCES Student(student_id),
         constraint pk_Graduation_Plan PRIMARY KEY(
