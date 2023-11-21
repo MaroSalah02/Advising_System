@@ -243,9 +243,9 @@ BEGIN
 END
 
 -- Some Insertions
-INSERT INTO Advisor VALUES('ahmed' , 'ahmed@yahoo.com' , 'c4.101' , '1234')
-INSERT INTO Advisor VALUES('allaa' , 'allaa@yahoo.com' , 'c5.203' , '0000')
-INSERT INTO Advisor VALUES('alSSSSSlaa' , 'allaa@yahoo.com' , 'c5.203' , '1000')
+--INSERT INTO Advisor VALUES('ahmed' , 'ahmed@yahoo.com' , 'c4.101' , '1234')
+--INSERT INTO Advisor VALUES('sara' , 'sara@yahoo.com' , 'c5.203' , '0000')
+--INSERT INTO Advisor VALUES('ali' , 'ali@yahoo.com' , 'c6.203' , '1000')
 -- Testing The PROCEDURE
 -- Go
 -- declare @Advisor_id INT
@@ -293,6 +293,6 @@ END
    
 GO
 -- Testing The Function
--- DECLARE @OUt BIT = 0
--- SET @OUt = dbo.FN_AdvisorLogin(1,'1234')
--- PRINT @OUt
+--DECLARE @OUT BIT = 0
+--SET @OUT = dbo.FN_AdvisorLogin(1,'1234')
+--PRINT @OUT
