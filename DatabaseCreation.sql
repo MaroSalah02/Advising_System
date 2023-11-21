@@ -87,7 +87,7 @@ BEGIN
         CONSTRAINT pk_Student_Instructor_Course_Take PRIMARY KEY(
             student_id,
             course_id,
-            instructor_id
+            semester_code
         )
 
     )
@@ -95,8 +95,8 @@ BEGIN
 
     CREATE TABLE Semester(
         semester_code VARCHAR(40) PRIMARY KEY,
-        start_date DATETIME,
-        end_date DATETIME
+        start_date DATE,
+        end_date DATE
     )
 
 
@@ -113,7 +113,7 @@ BEGIN
     CREATE TABLE Slot(
         slot_id INT PRIMARY KEY IDENTITY,
         day VARCHAR(40), -- Question 5
-        time INT CONSTRAINT check_time CHECK (time BETWEEN 1 AND 5), -- Question 6
+        time VARCHAR(40) CONSTRAINT check_time CHECK (time IN ('1','2','3','4','5')), -- Question 6
         location VARCHAR(40),
         course_id INT FOREIGN KEY REFERENCES Course(course_id),
         instructor_id INT FOREIGN KEY REFERENCES Instructor(instructor_id) 
@@ -137,7 +137,7 @@ BEGIN
     CREATE TABLE GradPlan_Course(
         plan_id int ,
         semster_code varchar(40),
-        course_id int foreign key references Course,
+        course_id int,
         Constraint fk_plan_semester FOREIGN KEY (plan_id,semster_code) REFERENCES Graduation_Plan(plan_id,semster_code),
         constraint pk_GradPlan_Course primary key(
             plan_id,
@@ -148,22 +148,22 @@ BEGIN
 
     CREATE TABLE Payment(
         payment_id INT PRIMARY KEY IDENTITY,
-        amount DECIMAL, -- Question 9
-        deadline DATE,
+        amount INT, -- Question 9 "DONE?"
+        deadline DATETIME,
         n_installments INT,
         status VARCHAR(40) default 'notPaid', -- Question 7
         fund_percentage DECIMAL,
         student_id INT FOREIGN KEY REFERENCES Student(student_id),
-        semester_code VARCHAR(40),
+        semester_code VARCHAR(40) REFERENCES Semester(semester_code),
     )
 
     CREATE TABLE Installment(
         payment_id INT FOREIGN KEY REFERENCES Payment(payment_id),
-        deadline DATE,
-        CONSTRAINT pk_Installment PRIMARY KEY (payment_id, deadline),
-        amount DECIMAL, -- Question 9
+        deadline DATETIME,
+        amount INT, -- Question 9 "DONE?"
         status VARCHAR(40) default 'notPaid',
-        start_date DATE
+        start_date DATETIME,
+        CONSTRAINT pk_Installment PRIMARY KEY (payment_id, deadline)
     )
 
 
@@ -175,12 +175,12 @@ BEGIN
         credit_hours INT, -- Question 8
         student_id INT FOREIGN KEY REFERENCES Student(student_id),
         advisor_id INT FOREIGN KEY REFERENCES Advisor(advisor_id),
-        course_id INT
+        course_id INT FOREIGN KEY REFERENCES Course(course_id)
     )
 
     create table MakeUp_Exam(
         exam_id INT primary key IDENTITY,
-        date DATE,
+        date DATETIME,
         type VARCHAR(40),
         course_id INT FOREIGN KEY REFERENCES Course(course_id)
     )
@@ -189,7 +189,7 @@ BEGIN
         exam_id INT FOREIGN KEY REFERENCES MakeUp_Exam(exam_id),
         student_id INT FOREIGN KEY REFERENCES Student(student_id),
         course_id INT,
-        primary key(exam_id, student_id) 
+        CONSTRAINT pk_Exam_Student PRIMARY KEY(exam_id, student_id) 
     )
 
 END;
