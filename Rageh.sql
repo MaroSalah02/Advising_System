@@ -2,7 +2,7 @@ CREATE DATABASE Advising_Team_109
 GO
 use Advising_Team_109
 -------------------
-go
+GO
 CREATE PROCEDURE CreateALLTABLE
 AS  
 BEGIN
@@ -206,8 +206,10 @@ AS
 SELECT S.* 
 FROM Student S
 
+-- Testing The View
 GO
 Select * FROM view_Students
+
 
 
 
@@ -218,8 +220,10 @@ AS
 SELECT C.name , C.semester , M.* 
 FROM Course C INNER JOIN MakeUp_Exam M ON C.course_id = M.course_id
 
+-- Testing The View
 GO
 Select * FROM Courses_MakeupExams
+
 
 
 
@@ -233,20 +237,21 @@ CREATE PROCEDURE Procedures_AdvisorRegistration
 @Advisor_id INT OUTPUT
 AS 
 BEGIN
-SELECT @Advisor_id = A.advisor_id
-FROM Advisor A
-WHERE  @Advisor_name = A.name AND @Advisor_password = A.password AND @Advisor_email = A.email AND @Advisor_office = A.office 
+   SELECT @Advisor_id = A.advisor_id
+   FROM Advisor A
+   WHERE  @Advisor_name = A.name AND @Advisor_password = A.password AND @Advisor_email = A.email AND @Advisor_office = A.office 
 END
 
 -- Some Insertions
--- INSERT INTO Advisor VALUES('ahmed' , 'ahmed@yahoo.com' , 'c4.101' , '1234')
--- INSERT INTO Advisor VALUES('allaa' , 'allaa@yahoo.com' , 'c5.203' , '0000')
-
+INSERT INTO Advisor VALUES('ahmed' , 'ahmed@yahoo.com' , 'c4.101' , '1234')
+INSERT INTO Advisor VALUES('allaa' , 'allaa@yahoo.com' , 'c5.203' , '0000')
+INSERT INTO Advisor VALUES('alSSSSSlaa' , 'allaa@yahoo.com' , 'c5.203' , '1000')
 -- Testing The PROCEDURE
 -- Go
 -- declare @Advisor_id INT
 -- EXEC Procedures_AdvisorRegistration 'allaa' , '0000' , 'allaa@yahoo.com' , 'c5.203', @Advisor_id OUTPUT
 -- print @Advisor_id
+
 
 
 
@@ -260,8 +265,8 @@ CREATE PROCEDURE Procedures_AdminAddingCourse
 @Course_semester INT
 AS
 BEGIN
-INSERT INTO Course (name, major, is_offered, credit_hours, semester)
-VALUES (@Course_name, @Course_major, @Course_is_offered, @Course_credit_hours, @Course_semester)
+   INSERT INTO Course (name, major, is_offered, credit_hours, semester)
+   VALUES (@Course_name, @Course_major, @Course_is_offered,       @Course_credit_hours, @Course_semester)
 END
 
 -- Testing The PROCEDURE
@@ -269,3 +274,25 @@ END
 -- EXEC Procedures_AdminAddingCourse 'Networks' , 'MET' , 1 , 2 , 5
 
 -- SELECT * FROM Course
+
+
+
+
+-- 2.3 Q
+GO
+CREATE FUNCTION FN_AdvisorLogin(@ID INT , @Password VARCHAR(40)) RETURNS BIT
+AS
+BEGIN
+   DECLARE @Success BIT = 0
+   IF EXISTS(SELECT A.advisor_id FROM Advisor A WHERE A.advisor_id = @ID AND A.password = @Password)
+   BEGIN
+      SET @Success = 1
+   END
+   RETURN @Success
+END
+   
+GO
+-- Testing The Function
+-- DECLARE @OUt BIT = 0
+-- SET @OUt = dbo.FN_AdvisorLogin(1,'1234')
+-- PRINT @OUt
