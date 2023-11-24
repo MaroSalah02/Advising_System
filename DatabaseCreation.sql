@@ -153,6 +153,7 @@ BEGIN
         n_installments INT,
         status VARCHAR(40) default 'notPaid', -- Question 7
         fund_percentage DECIMAL,
+        start_date DATETIME,
         student_id INT FOREIGN KEY REFERENCES Student(student_id),
         semester_code VARCHAR(40) REFERENCES Semester(semester_code),
     )
