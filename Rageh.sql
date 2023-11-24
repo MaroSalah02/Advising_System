@@ -1,5 +1,5 @@
 -- Answers Starts here --
-
+USE Advising_Team_109
 -- 2.2 A
 Go
 CREATE VIEW view_Students
@@ -109,10 +109,10 @@ BEGIN
 END
 
 --Testing The Procedure
---INSERT INTO Student(f_name,l_name)values('ahmed','mohamad')
---INSERT INTO Payment(amount,deadline,n_installments,fund_percentage,student_id)values(200000,'2023/12/25 10:50:30',2,50,1)
---EXEC Procedures_AdminIssueInstallment 1
---SELECT * FROM Installment
+-- INSERT INTO Student(f_name,l_name)values('ahmed','mohamad')
+-- INSERT INTO Payment(amount,deadline,n_installments,fund_percentage,student_id)values(200000,'2023/12/25 10:50:30',2,50,1)
+-- EXEC Procedures_AdminIssueInstallment 1
+-- SELECT * FROM Installment
 
 
 
@@ -128,9 +128,45 @@ BEGIN
    END
    RETURN @Success
 END
-   
-GO
+
 -- Testing The Function
 --DECLARE @OUT BIT = 0
 --SET @OUT = dbo.FN_AdvisorLogin(1,'1234')
+--PRINT @OUT
+
+
+
+GO
+CREATE FUNCTION FN_Advisors_Requests(@advisor_id INT) RETURNS TABLE
+AS
+RETURN
+(
+   SELECT R.*
+   FROM Request R
+   WHERE R.advisor_id = @advisor_id
+)
+
+-- Testing The Function
+--INSERT INTO Advisor VALUES('AHMED' , 'AHMED@GMAIL.COM' , 'C4.101' , '1234')
+--INSERT INTO Advisor VALUES('alaa' , 'alaa@GMAIL.COM' , 'C5.101' , '0000')
+--INSERT INTO Request VALUES('Any thing', 'pls get me out', 'pending', 10, null, 1, null)
+--INSERT INTO Request VALUES('alright', 'fine', 'les go', 10, null, 2, null)
+--select * from FN_Advisors_Requests(2)
+
+
+GO
+CREATE FUNCTION FN_StudentLogin(@ID INT , @Password VARCHAR(40)) RETURNS BIT
+AS
+BEGIN
+   DECLARE @Success BIT = 0
+   IF EXISTS(SELECT S.student_id FROM Student S WHERE S.student_id = @ID AND S.password = @Password)
+   BEGIN
+      SET @Success = 1
+   END
+   RETURN @Success
+END
+
+-- Testing The Function
+--DECLARE @OUT BIT = 0
+--SET @OUT = dbo.FN_StudentLogin(2,'1234')
 --PRINT @OUT
