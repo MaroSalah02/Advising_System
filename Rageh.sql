@@ -170,3 +170,17 @@ END
 --DECLARE @OUT BIT = 0
 --SET @OUT = dbo.FN_StudentLogin(2,'1234')
 --PRINT @OUT
+
+
+GO
+CREATE FUNCTION FN_StudentViewGP(@student_ID int) RETURNS TABLE
+AS
+RETURN
+(
+   SELECT S.student_id, S.f_name, S.l_name, GP.plan_id, C.course_id, C.name, GP.semster_code,
+   GP.expected_grad_date, GP.semster_credit_hours, GP.advisor_id
+   FROM Graduation_Plan GP INNER JOIN Student S ON GP.student_id = S.student_id
+         INNER JOIN GradPlan_Course GPC ON GP.plan_id = GPC.plan_id
+         INNER JOIN Course C ON GPC.course_id = C.course_id
+   WHERE S.student_id = @student_ID
+)
