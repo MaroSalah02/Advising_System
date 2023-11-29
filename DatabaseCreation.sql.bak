@@ -165,14 +165,22 @@ BEGIN
         payment_id INT PRIMARY KEY IDENTITY,
         amount INT, -- Question 9 "DONE?"
         deadline DATETIME,
+<<<<<<< Updated upstream
+        n_installments INT,
+        status VARCHAR(40) default 'notPaid', -- Question 7
+        fund_percentage DECIMAL,
+        start_date DATETIME,
+        student_id INT FOREIGN KEY REFERENCES Student(student_id),
+        semester_code VARCHAR(40) REFERENCES Semester(semester_code),
+=======
         n_installments INT, --should we derive this?
         status VARCHAR(40) NOT NULL DEFAULT 'notPaid', -- Question 7
         fund_percentage DECIMAL(5,2),
-		start_date DATETIME,
         student_id INT,
         semester_code VARCHAR(40),
         CONSTRAINT fk_payment_student FOREIGN KEY (student_id) REFERENCES Student(student_id) ON DELETE CASCADE ON UPDATE CASCADE,
         CONSTRAINT fk_payment_semester FOREIGN KEY (semester_code) REFERENCES Semester(semester_code) ON DELETE SET NULL ON UPDATE CASCADE,
+>>>>>>> Stashed changes
     )
 
     CREATE TABLE Installment(
