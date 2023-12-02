@@ -135,8 +135,8 @@ BEGIN
 
     CREATE TABLE Graduation_Plan(
         plan_id INT IDENTITY,
-        semster_code VARCHAR(40),
-        semster_credit_hours INT,
+        semester_code VARCHAR(40),
+        semester_credit_hours INT,
         expected_grad_date DATE,
         advisor_id INT,
         student_id INT,
@@ -144,19 +144,19 @@ BEGIN
         CONSTRAINT fk_gradPLan_student FOREIGN KEY (student_id) REFERENCES Student(student_id),
         CONSTRAINT pk_Graduation_Plan PRIMARY KEY(
             plan_id,
-            semster_code
+            semester_code
         )
     )
 
 
     CREATE TABLE GradPlan_Course(
         plan_id INT,
-        semster_code VARCHAR(40),
+        semester_code VARCHAR(40),
         course_id INT,
-        CONSTRAINT fk_gradPlanCourse_gradPlan FOREIGN KEY (plan_id,semster_code) REFERENCES Graduation_Plan(plan_id,semster_code),
+        CONSTRAINT fk_gradPlanCourse_gradPlan FOREIGN KEY (plan_id,semester_code) REFERENCES Graduation_Plan(plan_id,semester_code),
         CONSTRAINT pk_GradPlan_Course primary key(
             plan_id,
-            semster_code,
+            semester_code,
             course_id
         )
     )
