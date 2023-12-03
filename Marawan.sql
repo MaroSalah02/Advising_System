@@ -28,7 +28,7 @@ end
 
 ----------------------------------------
 -- Question 2.1.4
-
+go
 CREATE PROCEDURE clearAllTables
 AS
 BEGIN
@@ -139,3 +139,71 @@ BEGIN
 			
 END
 
+-------------------------------------------------------------
+GO
+
+
+
+Create procedure Procedures_AdvisorDeleteFromGP(
+	@StudentID int,
+	@semester_code varchar(40),
+	@course_ID int
+)
+AS 
+BEGIN
+	Delete From GradPlan_Course 
+	WHERE plan_id = (select plan_id
+					 From GradGraduation_Plan
+					 Where student_id= @StudentID AND semster_code = @semester_code)
+		  AND semster_code = @semester_code
+		  AND course_id = @course_ID
+END
+
+
+
+
+--------------------------------------------------
+
+GO
+CREATE PROCEDURE Procedures_AdvisorViewPendingRequests(
+	@Advisor_ID int
+)
+AS
+BEGIN
+	SELECT *
+	FROM Request
+	WHERE advisor_id = @Advisor_ID AND status LIKE 'pending'
+
+END
+
+--------------------------------------------------
+GO
+CREATE PROCEDURE Procedures_StudentSendingCHRequest(
+	@Student_ID int,
+	@credit_hours int,
+	@type varchar(40),
+	@comment varchar (40)
+)
+AS
+BEGIN
+	INSERT INTO Request(type, comment,status,credit_hours,student_id)
+	Values (@type, @comment,'pending',@credit_hours,@Student_ID)
+END
+
+
+----------------------------
+
+-- NOT COMPLETED 
+GO
+CREATE PROCEDURE Procedures_ChooseInstructor(
+	@StudentID int, 
+	@InstructorID int, 
+	@CourseID int,
+	@current_semester_code varchar(40)
+	)
+AS 
+BEGIN
+	INSERT INTO Instructor_Course
+	Values(@CourseID,@InstructorID)
+	
+END
