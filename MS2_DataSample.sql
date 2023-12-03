@@ -37,7 +37,7 @@ INSERT INTO Semester(semester_code, start_date, end_date) VALUES
 ('S24R2', '2024-08-01', '2024-08-31')
 
 -- Adding 10 records to the Advisor table
-INSERT INTO Advisor(advisor_name, email, office, password) VALUES
+INSERT INTO Advisor(name, email, office, password) VALUES
 ( 'Dr. Anderson', 'anderson@example.com', 'Office A', 'password1'),
 ( 'Prof. Baker', 'baker@example.com', 'Office B', 'password2'),
 ( 'Dr. Carter', 'carter@example.com', 'Office C', 'password3'),
@@ -132,20 +132,20 @@ INSERT INTO Course_Semester (course_id, semester_code) VALUES
 
 -- Adding 10 records to the Slot table
 INSERT INTO Slot (day, time, location, course_id, instructor_id) VALUES
-( 'Monday', 'First', 'Room A', 1, 1),
-( 'Tuesday', 'First', 'Room B', 2, 2),
-( 'Wednesday', 'Third', 'Room C', 3, 3),
-( 'Thursday', 'Fifth', 'Room D', 4, 4),
-( 'Saturday', 'Second', 'Room E', 5, 5),
-( 'Monday', 'Fourth', 'Room F', 6, 6),
-( 'Tuesday', 'Second', 'Room G', 7, 7),
-( 'Wednesday', 'Fifth', 'Room H', 8, 8),
-( 'Thursday', 'First', 'Room I', 9, 9),
-( 'Sunday', 'Fourth', 'Room J', 10, 10);
+( 'Monday', 1, 'Room A', 1, 1),
+( 'Tuesday', 1, 'Room B', 2, 2),
+( 'Wednesday', 3, 'Room C', 3, 3),
+( 'Thursday', 5, 'Room D', 4, 4),
+( 'Saturday', 2, 'Room E', 5, 5),
+( 'Monday', 4, 'Room F', 6, 6),
+( 'Tuesday', 2, 'Room G', 7, 7),
+( 'Wednesday', 5, 'Room H', 8, 8),
+( 'Thursday', 1, 'Room I', 9, 9),
+( 'Sunday', 4, 'Room J', 10, 10);
 
 
 -- Adding 10 records to the Graduation_Plan table
-INSERT INTO Graduation_Plan (semester_code, semester_credit_hours, expected_grad_semester, student_id, advisor_id) VALUES
+INSERT INTO Graduation_Plan (semester_code, semester_credit_hours, expected_grad_date, student_id, advisor_id) VALUES
 ( 'W23', 90,    '2024-01-31' ,   1, 1),
 ( 'S23', 85,    '2025-01-31'  ,     2, 2),
 ( 'S23R1', 75,  '2025-06-30' ,  3, 3),
@@ -209,7 +209,7 @@ INSERT INTO Exam_Student(exam_id, student_id,course_id) VALUES (3, 5, 9);
 INSERT INTO Exam_Student(exam_id, student_id,course_id) VALUES (4, 4, 10);
 
 -- Adding 10 records to the Payment table
-INSERT INTO Payment (amount, startdate,n_installments, status, fund_percentage, student_id, semester_code, deadline)  VALUES
+INSERT INTO Payment (amount, start_date,n_installments, status, fund_percentage, student_id, semester_code, deadline)  VALUES
 ( 500, '2023-11-22', 1, 'notPaid', 50.00, 1, 'W23', '2023-12-22'),
 ( 700, '2023-11-23', 1, 'notPaid', 60.00, 2, 'S23', '2023-12-23'),
 ( 600, '2023-11-24', 4, 'notPaid', 40.00, 3, 'S23R1', '2024-03-24'),
@@ -224,7 +224,7 @@ INSERT INTO Payment (amount, startdate,n_installments, status, fund_percentage, 
 
 
 -- Adding 10 records to the Installment table
-INSERT INTO Installment (payment_id, startdate, amount, status, deadline) VALUES
+INSERT INTO Installment (payment_id, start_date, amount, status, deadline) VALUES
 (1, '2023-11-22', 50, 'notPaid','2023-12-22'),
 (2, '2023-11-23', 70, 'notPaid','2023-12-23'),
 (3, '2023-12-24', 60, 'notPaid','2024-01-24'),
