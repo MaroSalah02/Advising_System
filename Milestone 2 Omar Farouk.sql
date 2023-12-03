@@ -94,3 +94,17 @@ from Slot s inner join Course c on s.course_id=c.course_id inner join Instructor
 where s.course_id=@CourseID and s.instructor_id=@InstructorID)
 go
 --------------------------------------------------------------------------------------
+--2.3-NN (checked)
+go
+create procedure Procedures_ViewMS
+@StudentID int
+as
+declare @major varchar(40)
+select @major=major from Student where student_id=@StudentID
+
+select* from Course where major=@major
+except
+select c.* from Student_Instructor_Course_Take t inner join Course c on t.course_id=c.course_id
+where t.student_id=@StudentID
+go
+--------------------------------------------------------------------------------------
