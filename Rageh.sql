@@ -184,3 +184,19 @@ RETURN
          INNER JOIN Course C ON GPC.course_id = C.course_id
    WHERE S.student_id = @student_ID
 )
+
+GO
+CREATE FUNCTION FN_StudentCheckSMEligiability(@course_id INT, @student_id INT) RETURNS BIT
+AS
+BEGIN
+DECLARE @eligible BIT
+    IF EXISTS ( SELECT STCT.student_id
+                FROM Student_Instructor_Course_Take STCT
+                WHERE (STCT.grade = 'FF' OR STCT.grade = 'FA' OR STCT.grade = 'F') OR (STCT.student_id = @student_id AND STCT.course_id = @course_id 
+                AND @student_id NOT IN (SELECT ES.student_id
+                                        FROM Exam_Student ES INNER JOIN MakeUp_Exam ME ON ES.exam_id = ME.exam_id
+                                        WHERE ES.course_id = @course_id AND ME.type = 'first_makeup'))
+                      AND 
+                
+    
+END
