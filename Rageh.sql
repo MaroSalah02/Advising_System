@@ -92,7 +92,7 @@ BEGIN
    FROM Payment P
    WHERE @payment_id = P.payment_id
 
-   SET @amount_to_be_paid = @amount_to_be_paid * (@fund_percentage / 100)
+   SET @amount_to_be_paid = @amount_to_be_paid - @amount_to_be_paid * (@fund_percentage / 100)
    SET @amount_to_be_paid = @amount_to_be_paid / @n_installments
 
    DECLARE @COUNTER INT = 0
@@ -109,10 +109,10 @@ BEGIN
 END
 
 --Testing The Procedure
--- INSERT INTO Student(f_name,l_name)values('ahmed','mohamad')
--- INSERT INTO Payment(amount,deadline,n_installments,fund_percentage,student_id)values(200000,'2023/12/25 10:50:30',2,50,1)
--- EXEC Procedures_AdminIssueInstallment 1
--- SELECT * FROM Installment
+ --INSERT INTO Student(f_name,l_name)values('ahmed','mohamad')
+ --INSERT INTO Payment(amount,deadline,n_installments,fund_percentage,student_id)values(200000,'2023/12/25 10:50:30',2,50,1)
+ --EXEC Procedures_AdminIssueInstallment 1
+ --SELECT * FROM Installment
 
 
 
@@ -189,14 +189,93 @@ GO
 CREATE FUNCTION FN_StudentCheckSMEligiability(@course_id INT, @student_id INT) RETURNS BIT
 AS
 BEGIN
-DECLARE @eligible BIT
-    IF EXISTS ( SELECT STCT.student_id
-                FROM Student_Instructor_Course_Take STCT
-                WHERE (STCT.grade = 'FF' OR STCT.grade = 'FA' OR STCT.grade = 'F') OR (STCT.student_id = @student_id AND STCT.course_id = @course_id 
-                AND @student_id NOT IN (SELECT ES.student_id
-                                        FROM Exam_Student ES INNER JOIN MakeUp_Exam ME ON ES.exam_id = ME.exam_id
-                                        WHERE ES.course_id = @course_id AND ME.type = 'first_makeup'))
-                      AND 
-                
+DECLARE @eligible BIT = 0
+DECLARE @failed_or_did_not_attend_First_makeup BIT
+DECLARE @no_of_failed_courses_even INT
+DECLARE @no_of_failed_courses_odd INT
+DECLARE @input_course_semester INT
+
+    IF EXISTS (SELECT STCT.student_id
+               FROM Student_Instructor_Course_Take STCT
+               WHERE (STCT.grade = 'FF' OR STCT.grade IS NULL) AND STCT.student_id = @student_id AND STCT.exam_type = 'First_makeup' AND @course_id = STCT.course_id)
+    SET @failed_or_did_not_attend_First_makeup = 1
+
+    SELECT @no_of_failed_courses_even = COUNT(C.course_id)
+    FROM Student_Instructor_Course_Take STCT INNER JOIN Course C ON STCT.student_id = @student_id AND STCT.course_id = C.course_id
+    WHERE (STCT.grade = 'FF' OR STCT.grade = 'F' OR STCT.grade IS NULL ) AND (C.SEMESTER % 2 = 0)
+
+    SELECT @no_of_failed_courses_odd = COUNT(C.course_id)
+    FROM Student_Instructor_Course_Take STCT INNER JOIN Course C ON STCT.student_id = @student_id AND STCT.course_id = C.course_id
+    WHERE (STCT.grade = 'FF' OR STCT.grade = 'F' OR STCT.grade IS NULL) AND (C.SEMESTER % 2 = 1)
     
+    SELECT @input_course_semester = C.semester
+    FROM Student_Instructor_Course_Take STCT INNER JOIN Course C ON C.course_id = STCT.course_id AND STCT.course_id = @course_id
+
+    IF (@input_course_semester % 2 = 0 AND @failed_or_did_not_attend_First_makeup = 1 AND @no_of_failed_courses_even <= 2)
+        SET @eligible = 1
+
+    IF (@input_course_semester % 2 = 1 AND @failed_or_did_not_attend_First_makeup = 1 AND @no_of_failed_courses_odd <= 2)
+        SET @eligible = 1
+
+    RETURN @eligible 
 END
+
+GO
+CREATE PROCEDURE Procedures_StudentRegisterSecondMakeup
+@student_id INT,
+@course_id INT,
+@student_current_semester VARCHAR(40)
+AS
+DECLARE @is_course_even_or_odd BIT
+DECLARE @exam_id INT
+
+    SELECT @is_course_even_or_odd = 1
+    FROM Course C 
+    WHERE C.semester % 2 = 0
+
+    SELECT @is_course_even_or_odd = 0
+    FROM Course C 
+    WHERE C.semester % 2 = 1
+
+    IF (@is_course_even_or_odd = 1 AND DBO.FN_StudentCheckSMEligiability(@course_id,@student_id) = 1
+        AND @student_current_semester NOT LIKE 'S%R%' AND @student_current_semester NOT LIKE 'W%')
+        BEGIN
+            SELECT @exam_id = ME.exam_id
+            FROM MakeUp_Exam ME
+            WHERE ME.course_id = @course_id AND ME.type = 'Second MakeUp'
+            INSERT INTO Exam_Student(exam_id, student_id,course_id) VALUES (@exam_id, @student_id, @course_id);
+        END
+
+    IF (@is_course_even_or_odd = 0 AND DBO.FN_StudentCheckSMEligiability(@course_id,@student_id) = 1
+        AND @student_current_semester NOT LIKE 'S%R%' AND @student_current_semester NOT LIKE 'W%')
+    BEGIN
+        SELECT @exam_id = ME.exam_id
+        FROM MakeUp_Exam ME
+        WHERE ME.course_id = @course_id AND ME.type = 'Second MakeUp'
+        INSERT INTO Exam_Student(exam_id, student_id,course_id) VALUES (@exam_id, @student_id, @course_id);
+    END
+
+
+--USE Advising_Team_109
+--EXEC DropALLTables
+--EXEC clearAllTables
+--EXEC CreateALLTABLE
+--PRINT 4 % 2
+
+--DECLARE @eligible BIT
+--SET @eligible = DBO.FN_StudentCheckSMEligiability(8,9)
+--PRINT @eligible
+
+EXEC Procedures_StudentRegisterSecondMakeup 9 , 1 , 'S23'
+
+INSERT INTO Student_Instructor_Course_Take (student_id, course_id, instructor_id, semester_code,exam_type, grade) VALUES
+(9, 1, 1, 'W23', 'First_makeup', 'F'),
+(2, 2, 2, 'S23', 'First_makeup', 'B')
+
+
+INSERT INTO MakeUp_Exam (date, type, course_id) VALUES
+('2023-02-10', 'Second MakeUp', 1)
+
+SELECT * FROM Exam_Student
+
+SELECT * FROM Student_Instructor_Course_Take
