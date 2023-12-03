@@ -71,7 +71,6 @@ select s.student_id as 'Student id',s.f_name as 'Student name',s.major as 'Stude
 from (Student s inner join Student_Instructor_Course_Take sc on s.student_id=sc.student_id)inner join Course c on sc.course_id=c.course_id
 where s.advisor_id=@AdvisorID and s.major=@major
 go
-exec Procedures_AdvisorViewAssignedStudents 1,'CS'
 --------------------------------------------------------------------------------------
 --2.3-CC (checked)
 go
