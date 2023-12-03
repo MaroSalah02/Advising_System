@@ -98,3 +98,60 @@ AS
         VALUES (@type, @comment, @studentID, @advisorID, @courseID)
     END
 GO
+
+-- 2.3 II(checked)
+
+
+CREATE PROC Procedures_StudentRegisterFirstMakup
+    @studentID INT,
+    @courseID INT,
+    @studentCurrentSemester VARCHAR(40)
+AS
+
+    IF @studentID IS NULL OR @courseID IS NULL OR @studentCurrentSemester IS NULL
+    BEGIN
+        PRINT 'ONE OF THE INPUTS IS NULL'
+    END
+    ELSE IF @studentID NOT IN (SELECT student_id FROM Student) OR @courseID NOT IN (SELECT course_id FROM Course)
+    BEGIN
+        PRINT 'ONE OF THE INPUTS IS INVALID'
+    END
+    ELSE
+    BEGIN
+        DECLARE @examID INT
+		DECLARE @is_course_even_or_odd BIT
+		DECLARE @exam_id INT
+
+		SELECT @is_course_even_or_odd = 1
+		FROM Course C	
+		WHERE C.semester % 2 = 0 AND C.course_id = @courseID
+
+		SELECT @is_course_even_or_odd = 0
+		FROM Course C 
+		WHERE C.semester % 2 = 1 AND C.course_id = @courseID
+
+        IF ((((SELECT COUNT(*)
+            FROM Student_Instructor_Course_Take
+            WHERE student_id = @studentID AND course_id = @courseID AND grade LIKE 'F%' AND exam_type = 'Normal') = 1)
+			AND @is_course_even_or_odd = 1 AND @studentCurrentSemester NOT LIKE 'S%R%' 
+			AND @studentCurrentSemester NOT LIKE 'W%') OR (((SELECT COUNT(*)
+            FROM Student_Instructor_Course_Take
+            WHERE student_id = @studentID AND course_id = @courseID AND grade LIKE 'F%' AND exam_type = 'Normal') = 1)
+			AND @is_course_even_or_odd = 0 AND @studentCurrentSemester NOT LIKE 'S%R%' 
+			AND @studentCurrentSemester NOT LIKE 'S%'))
+        BEGIN
+
+            SELECT @examID = exam_id
+            FROM MakeUp_Exam
+            WHERE course_id = @courseID AND type = 'First MakeUp'
+
+            INSERT INTO Exam_Student
+            VALUES (@examID, @studentID, @courseID)
+			
+        END
+        ELSE
+        BEGIN
+            PRINT 'CAN NOT REGISTER FIRST MAKEUP'
+        END
+    END
+GO
