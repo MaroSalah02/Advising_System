@@ -159,7 +159,43 @@ begin
 end
 go;
 
---2.3-LL -- Not completed
+----swcond makeup eligibility
+--GO
+--CREATE FUNCTION FN_StudentCheckSMEligiability(@course_id INT, @student_id INT) RETURNS BIT
+--AS
+--BEGIN
+--DECLARE @eligible BIT = 0
+--DECLARE @failed_or_did_not_attend_First_makeup BIT
+--DECLARE @no_of_failed_courses_even INT
+--DECLARE @no_of_failed_courses_odd INT
+--DECLARE @input_course_semester INT
+
+--    IF EXISTS (SELECT STCT.student_id
+--               FROM Student_Instructor_Course_Take STCT
+--               WHERE (STCT.grade = 'FF' OR STCT.grade IS NULL) AND STCT.student_id = @student_id AND STCT.exam_type = 'First_makeup' AND @course_id = STCT.course_id)
+--    SET @failed_or_did_not_attend_First_makeup = 1
+
+--    SELECT @no_of_failed_courses_even = COUNT(C.course_id)
+--    FROM Student_Instructor_Course_Take STCT INNER JOIN Course C ON STCT.student_id = @student_id AND STCT.course_id = C.course_id
+--    WHERE (STCT.grade = 'FF' OR STCT.grade = 'F' OR STCT.grade IS NULL ) AND (C.SEMESTER % 2 = 0)
+
+--    SELECT @no_of_failed_courses_odd = COUNT(C.course_id)
+--    FROM Student_Instructor_Course_Take STCT INNER JOIN Course C ON STCT.student_id = @student_id AND STCT.course_id = C.course_id
+--    WHERE (STCT.grade = 'FF' OR STCT.grade = 'F' OR STCT.grade IS NULL) AND (C.SEMESTER % 2 = 1)
+    
+--    SELECT @input_course_semester = C.semester
+--    FROM Student_Instructor_Course_Take STCT INNER JOIN Course C ON C.course_id = STCT.course_id AND STCT.course_id = @course_id
+
+--    IF (@input_course_semester % 2 = 0 AND @failed_or_did_not_attend_First_makeup = 1 AND @no_of_failed_courses_even <= 2)
+--        SET @eligible = 1
+
+--    IF (@input_course_semester % 2 = 1 AND @failed_or_did_not_attend_First_makeup = 1 AND @no_of_failed_courses_odd <= 2)
+--        SET @eligible = 1
+
+--    RETURN @eligible 
+--END
+
+--2.3-LL -- Checked
 GO
 CREATE PROCEDURE Procedures_ViewRequiredCourses
 @StudentID int,
@@ -187,21 +223,31 @@ BEGIN
 		SELECT @s_semester = semester, @s_major = major FROM Student
 		WHERE student_id = @StudentID
 		
-		SELECT C.course_id, C.name, C.major, C.is_offered, C.credit_hours, C.semester FROM Course C
-		INNER JOIN Student_Instructor_Course_Take SIC ON C.course_id = SIC.course_id
-		WHERE SIC.student_id = @StudentID AND MOD(C.semester, 2) = @odd
-		AND (
-			(
-			SIC.grade IN ('F', 'FF', 'FA') AND dbo.FN_StudentCheckSMEligiability(C.course_id, SIC.student_id)
-			)
-			OR
-			(
-			C.major = @s_major AND C.semester < @s_semester AND C.course_id NOT IN (SELECT course_id FROM Student_Instructor_Course_Take WHERE student_id = @StudentID))
-			)
+		-- SELECT C.course_id, C.name, C.major, C.is_offered, C.credit_hours, C.semester FROM Course C
+		-- LEFT OUTER JOIN Student_Instructor_Course_Take SIC ON C.course_id = SIC.course_id
+		-- WHERE SIC.student_id = @StudentID AND C.semester % 2 = @odd
+		-- AND (
+			-- (
+			-- SIC.grade IN ('F', 'FF', 'FA') AND dbo.FN_StudentCheckSMEligiability(C.course_id, SIC.student_id)
+			-- )
+			-- OR
+			-- (
+			-- C.major = @s_major AND C.semester < @s_semester AND C.course_id NOT IN (SELECT course_id FROM Student_Instructor_Course_Take WHERE student_id = @StudentID))
+			-- )
+			
+		SELECT C.* FROM Course C
+		WHERE C.major = @s_major AND C.semester < @s_semester AND C.course_id NOT IN (SELECT course_id FROM Student_Instructor_Course_Take WHERE student_id = @StudentID)
+		UNION
+		SELECT C1.* FROM COURSE C1
+		WHERE C1.course_id IN (SELECT course_id FROM Student_Instructor_Course_Take
+								WHERE student_id = @StudentID AND grade IN ('F', 'FF', 'FA') AND dbo.FN_StudentCheckSMEligiability(course_id, student_id) = 0
+								)
 	END
 END
 GO
+--INSERT INTO Course(name, major, is_offered, credit_hours, semester)  VALUES( 'Mathematics 2', 'DMET', 1, 3, 2)
 
+--EXEC Procedures_ViewRequiredCourses 9, 'W23'
 --2.3-MM
 
 GO
