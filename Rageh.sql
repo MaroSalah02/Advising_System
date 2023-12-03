@@ -257,11 +257,59 @@ DECLARE @exam_id INT
 
 
 --USE Advising_Team_109
---EXEC DropALLTables
---EXEC clearAllTables
---EXEC CreateALLTABLE
+EXEC DropALLTables
+EXEC clearAllTables
+EXEC CreateALLTABLE
 --PRINT 4 % 2
 
 --DECLARE @eligible BIT
 --SET @eligible = DBO.FN_StudentCheckSMEligiability(8,9)
 --PRINT @eligible
+
+-- 2.3 Y
+GO
+CREATE PROCEDURE Procedures_AdvisorApproveRejectCourseRequest
+    @requestID INT,
+    @current_semester_code VARCHAR(40)
+AS
+    IF @requestID IS NULL OR @current_semester_code IS NULL
+    BEGIN
+        PRINT 'ONE OF THE INPUTS IS NULL'
+    END
+    ELSE IF @requestID NOT IN (SELECT request_id FROM Request)
+    BEGIN
+        PRINT 'ONE OF THE INPUTS IS INVALID'
+    END
+    ELSE
+    BEGIN
+        DECLARE @studentID INT, @courseID INT, @aHours INT, @cHours INT , @advisorID INT
+        DECLARE @decision VARCHAR(40)
+
+        SELECT @studentID = S.student_id, @courseID = C.course_id, @aHours = S.assigned_hours, @cHours = C.credit_hours , @advisorID = S.advisor_id
+        FROM Request R JOIN Student S ON R.student_id = S.student_id JOIN Course C ON R.course_id = C.course_id
+        WHERE request_id = @requestID AND is_offered = 1
+
+        IF @aHours IS NULL
+        OR @courseID IS NULL
+        OR @cHours > @aHours
+        OR EXISTS (SELECT *
+                   FROM view_Course_prerequisites
+                   WHERE Course_ID = @courseID AND Prerequisiite_ID NOT IN (
+                        SELECT course_id 
+                        FROM Student_Instructor_Course_Take
+                        WHERE student_id = @studentID AND grade IS NOT NULL))
+        BEGIN
+            SET @decision = 'rejected'
+        END
+        ELSE
+        BEGIN
+            SET @decision = 'approved'
+            INSERT INTO Student_Instructor_Course_Take (student_id, course_id, instructor_id, semester_code, grade) VALUES
+            (@studentID,@courseID,@advisorID,@current_semester_code,null)
+        END
+        UPDATE Request
+        SET status = @decision
+        WHERE request_id = @requestID
+        
+
+    END
