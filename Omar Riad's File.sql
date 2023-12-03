@@ -90,7 +90,7 @@ BEGIN
 		PRINT 'This request is a course request not a credit hour request'
 		ELSE
 		BEGIN
-			IF @req_credit + @student_assigned_hours <= 34
+			IF @req_credit <= @student_assigned_hours
 			BEGIN
 				UPDATE Request 
 				SET status = 'accepted'
