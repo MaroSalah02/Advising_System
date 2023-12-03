@@ -58,3 +58,173 @@ AS
 INSERT INTO Graduation_Plan(semster_code, semster_credit_hours, expected_grad_date, advisor_id, student_id) 
 VALUES(@sem_code, @sem_credit_hours, @exp_grad_date, @advisor, @student)
 GO
+
+--2.3-W
+GO
+CREATE PROCEDURE Procedures_AdvisorApproveRejectCHRequest
+@requestID INT,
+@current_sem_code VARCHAR(40)
+AS
+DECLARE @req_credit int
+DECLARE @student_assigned_hours int
+DECLARE @studen_id int
+DECLARE @req_type VARCHAR(40)
+
+IF NOT EXISTS(SELECT * FROM Request WHERE request_id = @requestID)
+PRINT 'No such request exists'
+ELSE
+BEGIN
+	SELECT @req_credit = R.credit_hours, @student_assigned_hours = S.assigned_hours, @req_type = R.type, @studen_id = S.student_id
+	FROM Request R INNER JOIN Student S ON R.student_id = S.student_id
+	WHERE R.request_id = @requestID
+
+	IF NOT EXISTS(SELECT * FROM Semester WHERE semester_code = @current_sem_code)
+	PRINT 'No such semester exists'
+	ELSE
+	BEGIN
+		IF @req_type NOT LIKE '%credit_hours%'
+		PRINT 'This request is a course request not a credit hour request'
+		ELSE
+		BEGIN
+			IF @req_credit + @student_assigned_hours <= 34
+			BEGIN
+				UPDATE Request 
+				SET status = 'accepted'
+				WHERE request_id = @requestID
+
+				DECLARE @payment_id int
+
+				SELECT @payment_id = payment_id FROM Payment P
+				WHERE P.student_id = @studen_id AND P.semester_code = @current_sem_code
+
+				UPDATE Payment
+				SET amount = amount + @req_credit * 1000
+				WHERE payment_id = @payment_id
+
+				UPDATE Installment
+				SET amount = amount + @req_credit * 1000
+				WHERE payment_id = @payment_id AND deadline = (SELECT I.deadline FROM Installment I
+																WHERE I.deadline > GETDATE() AND I.deadline <= ALL (SELECT I1.deadline FROM Installment I1
+																													WHERE I1.deadline > GETDATE()
+																													)
+																)
+				PRINT 'Request Accepted'
+			END
+			ELSE
+			BEGIN
+				UPDATE Request 
+				SET status = 'rejected'
+				WHERE request_id = @requestID
+
+				PRINT 'Request Rejected'
+			END
+		END
+	END
+END
+GO
+
+--2.3-BB
+GO
+CREATE PROCEDURE Procedures_StudentaddMobile
+@StudentID INT,
+@mobile_number VARCHAR(40)
+AS
+INSERT INTO Student_phone
+VALUES(@StudentID,@mobile_number);
+GO
+
+
+--2.3-GG
+
+go;
+create function FN_StudentUpcoming_installment
+(@StudentID int)
+returns date
+begin
+return(select i.deadline from Payment p inner join Installment i on
+p.payment_id=i.payment_id
+where p.student_id=@StudentID and i.dealine<current_timestamp and  i.deadline < all(select p.payment_id ,i.deadline from Payment p inner join Installment i on
+p.payment_id=i.payment_id))
+end;
+go;
+
+--2.3-LL
+GO
+CREATE PROCEDURE Procedures_ViewRequiredCourses
+@StudentID int,
+@Current_semester_code VARCHAR(40)
+AS
+DECLARE @odd int
+
+IF @Current_semester_code LIKE '%W__%' OR @Current_semester_code LIKE '%S__R1%'
+	SET @odd = 1
+ELSE
+	SET @odd = 0
+
+
+IF NOT EXISTS (SELECT * FROM Student WHERE student_id = @StudentID)
+print 'No such student ID exists'
+ELSE
+BEGIN
+	IF NOT EXISTS (SELECT * FROM Semester WHERE semester_code = @Current_semester_code)
+	PRINT 'No such semester code exists'
+	ELSE
+	BEGIN
+	DECLARE @s_semester int
+	DECLARE @s_major VARCHAR(40)
+		
+		SELECT @s_semester = semester, @s_major = major FROM Student
+		WHERE student_id = @StudentID
+		
+		SELECT C.course_id, C.name, C.major, C.is_offered, C.credit_hours, C.semester FROM Course C
+		INNER JOIN Student_Instructor_Course_Take SIC ON C.course_id = SIC.course_id
+		WHERE SIC.student_id = @StudentID AND MOD(C.semester, 2) = @odd
+		AND (
+			(
+			SIC.grade IN ('F', 'FF', 'FA') AND dbo.FN_StudentCheckSMEligiability(C.course_id, SIC.student_id)
+			)
+			OR
+			(
+			C.major = @s_major AND C.semester < @s_semester AND C.course_id NOT IN (SELECT course_id FROM Student_Instructor_Course_Take WHERE student_id = @StudentID))
+			)
+	END
+END
+GO
+
+--2.3-MM
+
+GO
+CREATE PROCEDURE Procedures_ViewOptionalCourse
+@StudentID int,
+@Current_semester_code VARCHAR(40)
+AS
+
+IF @Current_semester_code LIKE '%W__%' OR @Current_semester_code LIKE '%S__R1%'
+	SET @odd = 1
+ELSE
+	SET @odd = 0
+
+IF NOT EXISTS (SELECT * FROM Student WHERE student_id = @StudentID)
+print 'No such student ID exists'
+ELSE
+BEGIN
+	IF NOT EXISTS (SELECT * FROM Semester WHERE semester_code = @Current_semester_code)
+	PRINT 'No such semester code exists'
+	ELSE
+	BEGIN
+	DECLARE @s_semester int
+	DECLARE @s_major VARCHAR(40)
+		
+		SELECT @s_semester = semester, @s_major = major FROM Student
+		WHERE student_id = @StudentID
+
+		SELECT C.course_id, C.name, C.major, C.is_offered, C.credit_hours, C.semester FROM Course C
+		WHERE C.major = @s_major AND C.semester >= @s_semester AND MOD(C.semester, 2) = @odd
+		EXCEPT
+		SELECT C.course_id, C.name, C.major, C.is_offered, C.credit_hours, C.semester FROM Course C
+		INNER JOIN PreqCourse_course PC ON C.course_id = PC.course_id
+		WHERE PC.prerequisite_course_id NOT IN (SELECT * FROM Student_Instructor_Course_Take SIC
+												WHERE SIC.student_id = @StudentID)
+	END
+END
+GO
