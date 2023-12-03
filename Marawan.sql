@@ -54,7 +54,6 @@ BEGIN
 
 END
 
-EXEC clearAllTables
 --------------------------
 -- Question 2.2 (E)
 

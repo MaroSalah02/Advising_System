@@ -231,11 +231,11 @@ DECLARE @exam_id INT
 
     SELECT @is_course_even_or_odd = 1
     FROM Course C 
-    WHERE C.semester % 2 = 0
+    WHERE C.semester % 2 = 0 AND C.course_id = @course_id
 
     SELECT @is_course_even_or_odd = 0
     FROM Course C 
-    WHERE C.semester % 2 = 1
+    WHERE C.semester % 2 = 1 AND C.course_id = @course_id
 
     IF (@is_course_even_or_odd = 1 AND DBO.FN_StudentCheckSMEligiability(@course_id,@student_id) = 1
         AND @student_current_semester NOT LIKE 'S%R%' AND @student_current_semester NOT LIKE 'W%')
@@ -247,7 +247,7 @@ DECLARE @exam_id INT
         END
 
     IF (@is_course_even_or_odd = 0 AND DBO.FN_StudentCheckSMEligiability(@course_id,@student_id) = 1
-        AND @student_current_semester NOT LIKE 'S%R%' AND @student_current_semester NOT LIKE 'W%')
+        AND @student_current_semester NOT LIKE 'S%R%' AND @student_current_semester NOT LIKE 'S%')
     BEGIN
         SELECT @exam_id = ME.exam_id
         FROM MakeUp_Exam ME
@@ -265,17 +265,3 @@ DECLARE @exam_id INT
 --DECLARE @eligible BIT
 --SET @eligible = DBO.FN_StudentCheckSMEligiability(8,9)
 --PRINT @eligible
-
-EXEC Procedures_StudentRegisterSecondMakeup 9 , 1 , 'S23'
-
-INSERT INTO Student_Instructor_Course_Take (student_id, course_id, instructor_id, semester_code,exam_type, grade) VALUES
-(9, 1, 1, 'W23', 'First_makeup', 'F'),
-(2, 2, 2, 'S23', 'First_makeup', 'B')
-
-
-INSERT INTO MakeUp_Exam (date, type, course_id) VALUES
-('2023-02-10', 'Second MakeUp', 1)
-
-SELECT * FROM Exam_Student
-
-SELECT * FROM Student_Instructor_Course_Take
