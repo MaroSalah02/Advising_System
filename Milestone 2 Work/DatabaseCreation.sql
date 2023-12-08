@@ -1,7 +1,6 @@
-DROP DATABASE Advising_Team_109
 CREATE DATABASE Advising_Team_109
 -------------------
-DROP PROCEDURE CreateALLTABLE
+--2.1-1
 go
 CREATE PROCEDURE CreateALLTABLE
 AS  
@@ -218,5 +217,3 @@ BEGIN
     )
 
 END;
-
-EXEC CreateALLTABLE
