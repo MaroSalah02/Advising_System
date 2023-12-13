@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Milestone_3
+namespace Milestone_3.Login
 {
 
 

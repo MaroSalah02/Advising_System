@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Milestone_3
+namespace Milestone_3.Login
 {
     public partial class Login : System.Web.UI.Page
     {
