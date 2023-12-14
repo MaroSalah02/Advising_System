@@ -41,12 +41,8 @@ namespace Milestone_3
                 }
                 else
                 {
-                    Session["id"] = id;  
-                    
-                    //HttpContext h = HttpContext.Current;
-                    //Response.Write(h.Session["id"]);
-
-                    //Response.Redirect();
+                    Session["id"] = id;
+                    Response.Redirect("~/Advisor/Advisor.aspx");
                 }
             }
             else
