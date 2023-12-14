@@ -36,8 +36,9 @@ INSERT INTO Semester(semester_code, start_date, end_date) VALUES
 ('S24R1', '2024-07-01', '2024-07-31'),
 ('S24R2', '2024-08-01', '2024-08-31')
 --
+
 -- Adding 10 records to the Advisor table
-INSERT INTO Advisor(name, email, office, password) VALUES
+INSERT INTO Advisor(advisor_name, email, office, password) VALUES
 ( 'Dr. Anderson', 'anderson@example.com', 'Office A', 'password1'),
 ( 'Prof. Baker', 'baker@example.com', 'Office B', 'password2'),
 ( 'Dr. Carter', 'carter@example.com', 'Office C', 'password3'),
@@ -209,7 +210,7 @@ INSERT INTO Exam_Student(exam_id, student_id,course_id) VALUES (3, 5, 9);
 INSERT INTO Exam_Student(exam_id, student_id,course_id) VALUES (4, 4, 10);
 
 -- Adding 10 records to the Payment table
-INSERT INTO Payment (amount, start_date,n_installments, status, fund_percentage, student_id, semester_code, deadline)  VALUES
+INSERT INTO Payment (amount, startdate,n_installments, status, fund_percentage, student_id, semester_code, deadline)  VALUES
 ( 500, '2023-11-22', 1, 'notPaid', 50.00, 1, 'W23', '2023-12-22'),
 ( 700, '2023-11-23', 1, 'notPaid', 60.00, 2, 'S23', '2023-12-23'),
 ( 600, '2023-11-24', 4, 'notPaid', 40.00, 3, 'S23R1', '2024-03-24'),
@@ -223,7 +224,7 @@ INSERT INTO Payment (amount, start_date,n_installments, status, fund_percentage,
 
 
 -- Adding 10 records to the Installment table
-INSERT INTO Installment (payment_id, start_date, amount, status, deadline) VALUES
+INSERT INTO Installment (payment_id, startdate, amount, status, deadline) VALUES
 (1, '2023-11-22', 50, 'notPaid','2023-12-22'),
 (2, '2023-11-23', 70, 'notPaid','2023-12-23'),
 (3, '2023-12-24', 60, 'notPaid','2024-01-24'),
@@ -239,4 +240,4 @@ INSERT INTO Installment (payment_id, start_date, amount, status, deadline) VALUE
 
 --EXEC DropALLTables
 
---EXEC CreateALLTABLE
+--exec CreateAllTables

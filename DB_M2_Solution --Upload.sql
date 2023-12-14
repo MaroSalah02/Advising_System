@@ -68,7 +68,7 @@ primary key(plan_id, semester_code)
      )
 ---------------------------Instructor------------------------------------
 create table Instructor (
-instructor_id int primary key,
+instructor_id int primary key identity,
 name varchar(40),
 email varchar(40), 
 faculty varchar(40), 
@@ -117,7 +117,7 @@ primary key (course_id,plan_id, semester_code)
 ------------------------Slot-------------------------------------
 
 create table Slot (
-slot_id int primary key, 
+slot_id int primary key identity, 
 day varchar(40),
 time varchar(40), 
 location varchar(40), 
@@ -156,7 +156,7 @@ primary key(exam_id, student_id)
 ---------------------------Payment-----------------------------------
 
 create table Payment(
-payment_id int primary key,
+payment_id int primary key identity,
 amount int,
 startdate datetime,
 deadline datetime,
