@@ -19,11 +19,11 @@ namespace Milestone_3.Admin
             string connectionString = WebConfigurationManager.ConnectionStrings["MainConnection"].ToString();
             SqlConnection connection = new SqlConnection(connectionString);
 
-            SqlCommand retriveAdvisors = new SqlCommand("AdminListStudentsWithAdvisors", connection);
-            retriveAdvisors.CommandType = CommandType.StoredProcedure;
+            SqlCommand retriveStudentWithAdvisors = new SqlCommand("AdminListStudentsWithAdvisors", connection);
+            retriveStudentWithAdvisors.CommandType = CommandType.StoredProcedure;
 
             connection.Open();
-            SqlDataReader rdr = retriveAdvisors.ExecuteReader(CommandBehavior.CloseConnection);
+            SqlDataReader rdr = retriveStudentWithAdvisors.ExecuteReader(CommandBehavior.CloseConnection);
             while (rdr.Read())
             {
                 String student_id = rdr.GetInt32(rdr.GetOrdinal("student_id")).ToString();
@@ -41,6 +41,7 @@ namespace Milestone_3.Admin
 
                 table1.Rows.Add(row);   
             }
+            connection.Close();
         }
 
         protected void Back(object sender, EventArgs e)

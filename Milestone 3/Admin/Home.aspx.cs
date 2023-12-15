@@ -24,10 +24,10 @@ namespace Milestone_3.Admin
             Response.Redirect("ViewStudentsWithAdvisors.aspx");
         }
 
-        //protected void viewAllAdvisors(object sender, EventArgs e)
-        //{
-        //    Response.Redirect("~/Login/Login.aspx");
-        //}
+        protected void viewPendingRequests(object sender, EventArgs e)
+        {
+            Response.Redirect("ViewPendingRequests.aspx");
+        }
 
         //protected void viewAllAdvisors(object sender, EventArgs e)
         //{

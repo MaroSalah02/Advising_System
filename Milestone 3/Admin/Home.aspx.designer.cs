@@ -15,15 +15,6 @@ namespace Milestone_3.Admin
     {
 
         /// <summary>
-        /// Button_1A control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button_1A;
-
-        /// <summary>
         /// Button_1B control.
         /// </summary>
         /// <remarks>
@@ -33,21 +24,30 @@ namespace Milestone_3.Admin
         protected global::System.Web.UI.WebControls.Button Button_1B;
 
         /// <summary>
-        /// Button1 control.
+        /// Button_1C control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button Button_1C;
 
         /// <summary>
-        /// Button2 control.
+        /// Button_1D control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.Button Button_1D;
+
+        /// <summary>
+        /// Button_1J control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button_1J;
     }
 }

@@ -70,6 +70,7 @@
     <Content Include="Admin\Home.aspx" />
     <Content Include="Admin\Admin_Stylesheet.css" />
     <Content Include="Admin\ViewAdvisors.aspx" />
+    <Content Include="Admin\ViewPendingRequests.aspx" />
     <Content Include="Admin\ViewStudentsWithAdvisors.aspx" />
     <Content Include="Advisor\Advisor.aspx" />
     <Content Include="Login\Login.aspx" />
@@ -90,6 +91,13 @@
     </Compile>
     <Compile Include="Admin\ViewAdvisors.aspx.designer.cs">
       <DependentUpon>ViewAdvisors.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ViewPendingRequests.aspx.cs">
+      <DependentUpon>ViewPendingRequests.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ViewPendingRequests.aspx.designer.cs">
+      <DependentUpon>ViewPendingRequests.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\ViewStudentsWithAdvisors.aspx.cs">
       <DependentUpon>ViewStudentsWithAdvisors.aspx</DependentUpon>
