@@ -32,23 +32,30 @@ namespace Milestone_3
                 String connectstr = WebConfigurationManager.ConnectionStrings["con"].ToString();
                 SqlConnection c = new SqlConnection(connectstr);
 
-                id = Int16.Parse(TextBox1.Text);
-                String password = TextBox2.Text;
-
-                String query = "select dbo.FN_AdvisorLogin("+id+",N'"+password+"')";
-                SqlCommand func = new SqlCommand(query, c);
-                
-                c.Open();
-                    bool result = Convert.ToBoolean(func.ExecuteScalar());
-                c.Close();
-                if (!result)
+                if(TextBox1.Text.Equals("") || TextBox2.Text.Equals(""))
                 {
-                    Response.Write("not valid");
+                    alert();
                 }
                 else
                 {
-                    Session["id"] = id;
-                    Response.Redirect("~/Advisor/Advisor.aspx");
+                    id = Int16.Parse(TextBox1.Text);
+                    String password = TextBox2.Text;
+
+                    String query = "select dbo.FN_AdvisorLogin(" + id + ",N'" + password + "')";
+                    SqlCommand func = new SqlCommand(query, c);
+
+                    c.Open();
+                    bool result = Convert.ToBoolean(func.ExecuteScalar());
+                    c.Close();
+                    if (!result)
+                    {
+                        Response.Write("not valid");
+                    }
+                    else
+                    {
+                        Session["id"] = id;
+                        Response.Redirect("~/Advisor/Advisor.aspx");
+                    }
                 }
             }
             else
@@ -56,34 +63,42 @@ namespace Milestone_3
                 String connectstr = WebConfigurationManager.ConnectionStrings["con"].ToString();
                 SqlConnection c = new SqlConnection(connectstr);
 
-                id = Int16.Parse(TextBox1.Text);
-                String password = TextBox2.Text;
 
-                String query = "select dbo.FN_StudentLogin(" + id + ",N'" + password + "')";
-                SqlCommand func = new SqlCommand(query, c);
-
-                c.Open();
-                bool result = Convert.ToBoolean(func.ExecuteScalar());
-                c.Close();
-                if (!result)
+                if (TextBox1.Text.Equals("") || TextBox2.Text.Equals(""))
                 {
-                    Response.Write("not valid");
+                    alert();
                 }
                 else
                 {
-                    Session["id"] = id;
-                    Response.Redirect("~/Student/studentMainMenu.aspx");
-                    //HttpContext h = HttpContext.Current;
-                    //Response.Write(h.Session["id"]);
+                    id = Int16.Parse(TextBox1.Text);
+                    String password = TextBox2.Text;
 
-                    //Response.Redirect();
+                    String query = "select dbo.FN_StudentLogin(" + id + ",N'" + password + "')";
+                    SqlCommand func = new SqlCommand(query, c);
+
+                    c.Open();
+                    bool result = Convert.ToBoolean(func.ExecuteScalar());
+                    c.Close();
+                    if (!result)
+                    {
+                        Response.Write("not valid");
+                    }
+                    else
+                    {
+                        Session["id"] = id;
+                        Response.Redirect("~/Student/studentMainMenu.aspx");
+                        //HttpContext h = HttpContext.Current;
+                        //Response.Write(h.Session["id"]);
+
+                        //Response.Redirect();
+                    }
                 }
-
             }
         }
-        protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
+        private void alert()
         {
-
+            string script = "alert('There is one or more empty fields!');";
+            ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
         }
     }
 }

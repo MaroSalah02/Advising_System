@@ -12,7 +12,7 @@
             <asp:TextBox ID="TextBox1" runat="server" placeholder="User ID"></asp:TextBox>
             <asp:TextBox ID="TextBox2" runat="server" placeholder="password"></asp:TextBox>
             <asp:Button ID="Button1" runat="server" Text="Login" OnClick="Button1_Click"/>
-          <asp:RadioButtonList ID="RadioButtonList1" runat="server" OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged">
+          <asp:RadioButtonList ID="RadioButtonList1" runat="server">
               <asp:ListItem Selected="True">Advisor</asp:ListItem>
               <asp:ListItem>Student</asp:ListItem>
           </asp:RadioButtonList>
