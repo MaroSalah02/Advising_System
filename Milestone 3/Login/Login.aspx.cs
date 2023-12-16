@@ -20,7 +20,7 @@ namespace Milestone_3
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            if (TextBox1.Text == "admin" && TextBox2.Text == "admin")
+            if (TextBox1.Text == "0" && TextBox2.Text == "admin")
             {
                 Session["id"] = "-1";
                 Response.Redirect("~/Admin/Home.aspx");
