@@ -20,9 +20,15 @@ namespace Milestone_3
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            if (TextBox1.Text == "admin" && TextBox2.Text == "admin")
+            {
+                Session["id"] = "-1";
+                Response.Redirect("~/Admin/Home.aspx");
+            }
             int id;
             if (RadioButtonList1.SelectedItem.Text == "Advisor")
             {
+                
                 String connectstr = WebConfigurationManager.ConnectionStrings["con"].ToString();
                 SqlConnection c = new SqlConnection(connectstr);
 
