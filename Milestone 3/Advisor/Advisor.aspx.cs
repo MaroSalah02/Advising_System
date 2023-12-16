@@ -182,17 +182,17 @@ namespace Milestone_3
                         int rows_affected = proc.ExecuteNonQuery();
                         if (rows_affected > 0)
                         {
-                            correct_or_not.InnerText = "Status is: Done";
+                            correct_or_not.InnerText = "Status is: Insertion Successful";
                         }
                         else
                         {
-                            correct_or_not.InnerText = "Status is: Failed";
+                            correct_or_not.InnerText = "Status is: Insertion failed";
                         }
                         c.Close();
                     }
                     catch (Exception ex)
                     {
-                        correct_or_not.InnerText = "Status is: logic error";
+                        correct_or_not.InnerText = ex.Message;
                     }
                 }
 
@@ -224,17 +224,17 @@ namespace Milestone_3
                         int rows_affected = proc.ExecuteNonQuery();
                         if (rows_affected > 0)
                         {
-                            correct_or_not.InnerText = "Status is: Done";
+                            correct_or_not.InnerText = "Status is: Insertion Successful";
                         }
                         else
                         {
-                            correct_or_not.InnerText = "Status is: Failed";
+                            correct_or_not.InnerText = "Status is: Insertion failed";
                         }
                         c.Close();
                     }
                     catch (Exception ex)
                     {
-                        correct_or_not.InnerText = "Status is: logic error";
+                        correct_or_not.InnerText = ex.Message;
                     }
 
                 }
@@ -269,17 +269,17 @@ namespace Milestone_3
                         int rows_affected = proc.ExecuteNonQuery();
                         if (rows_affected > 0)
                         {
-                            correct_or_not.InnerText = "Status is: Done";
+                            correct_or_not.InnerText = "Status is: Update Successful";
                         }
                         else
                         {
-                            correct_or_not.InnerText = "Status is: Failed";
+                            correct_or_not.InnerText = "Status is: Update failed";
                         }
                         c.Close();
                     }
                     catch (Exception ex)
                     {
-                        correct_or_not.InnerText = "Status is: logic error";
+                        correct_or_not.InnerText = "Status is: Request does not exist";
                     }
                 }
             }
@@ -308,17 +308,17 @@ namespace Milestone_3
                         int rows_affected = proc.ExecuteNonQuery();
                         if (rows_affected > 0)
                         {
-                            correct_or_not.InnerText = "Status is: Done";
+                            correct_or_not.InnerText = "Status is: Update Successful";
                         }
                         else
                         {
-                            correct_or_not.InnerText = "Status is: Failed";
+                            correct_or_not.InnerText = "Status is: Update failed";
                         }
                         c.Close();
                     }
                     catch (Exception ex)
                     {
-                        correct_or_not.InnerText = "Status is: logic error";
+                        correct_or_not.InnerText = "Status is: Request does not exist";
                     }
                 }
 
@@ -362,17 +362,17 @@ namespace Milestone_3
                         int rows_affected = proc.ExecuteNonQuery();
                         if (rows_affected > 0)
                         {
-                            correct_or_not.InnerText = "Status is: Done";
+                            correct_or_not.InnerText = "Status is: Update Successful";
                         }
                         else
                         {
-                            correct_or_not.InnerText = "Status is: Failed";
+                            correct_or_not.InnerText = "Status is: Update failed";
                         }
                         c.Close();
                     }
                     catch (Exception ex)
                     {
-                        correct_or_not.InnerText = "Status is: logic error";
+                        correct_or_not.InnerText = ex.Message;
                     }
                 }
 
@@ -405,17 +405,17 @@ namespace Milestone_3
                         int rows_affected = proc.ExecuteNonQuery();
                         if (rows_affected > 0)
                         {
-                            correct_or_not.InnerText = "Status is: Done";
+                            correct_or_not.InnerText = "Status is: Deletion Successful";
                         }
                         else
                         {
-                            correct_or_not.InnerText = "Status is: Failed";
+                            correct_or_not.InnerText = "Status is: Deletion failed";
                         }
                         c.Close();
                     }
                     catch (Exception ex)
                     {
-                        correct_or_not.InnerText = "Status is: logic error";
+                        correct_or_not.InnerText = ex.Message;
                     }
                 }
 
@@ -446,7 +446,7 @@ namespace Milestone_3
         }
         private void alert()
         {
-            string script = "alert('There is an empty field!');";
+            string script = "alert('There is one or more empty fields!');";
             ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
         }
         //protected void back_to_main(object sender, EventArgs e)
