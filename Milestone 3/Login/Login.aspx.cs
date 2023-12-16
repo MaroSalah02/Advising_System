@@ -66,7 +66,7 @@ namespace Milestone_3
                 else
                 {
                     Session["id"] = id;
-
+                    Response.Redirect("~/Student/studentMainMenu.aspx");
                     //HttpContext h = HttpContext.Current;
                     //Response.Write(h.Session["id"]);
 
