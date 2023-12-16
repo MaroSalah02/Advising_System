@@ -16,7 +16,10 @@ namespace Milestone_3.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["id"] == null || !Session["id"].Equals("-1"))
+            {
+                Response.Redirect("~/Login/Login.aspx");
+            }
         }
 
         protected void viewAllAdvisors(object sender, EventArgs e)
@@ -45,7 +48,7 @@ namespace Milestone_3.Admin
         }
         protected void deleteCourse(object sender, EventArgs e)//(needs more testing)
         {
-            string connectionString = WebConfigurationManager.ConnectionStrings["MainConnection"].ToString();
+            string connectionString = WebConfigurationManager.ConnectionStrings["con"].ToString();
             SqlConnection connection = new SqlConnection(connectionString);
 
             SqlCommand delete = new SqlCommand("Procedures_AdminDeleteCourse", connection);
@@ -59,7 +62,7 @@ namespace Milestone_3.Admin
         }
         protected void deleteSlot(object sender, EventArgs e)
         {
-            string connectionString = WebConfigurationManager.ConnectionStrings["MainConnection"].ToString();
+            string connectionString = WebConfigurationManager.ConnectionStrings["con"].ToString();
             SqlConnection connection = new SqlConnection(connectionString);
 
             SqlCommand delete = new SqlCommand("Procedures_AdminDeleteSlots", connection);
@@ -73,7 +76,7 @@ namespace Milestone_3.Admin
         }
         protected void addExam(object sender, EventArgs e)
         {
-            string connectionString = WebConfigurationManager.ConnectionStrings["MainConnection"].ToString();
+            string connectionString = WebConfigurationManager.ConnectionStrings["con"].ToString();
             SqlConnection connection = new SqlConnection(connectionString);
 
             SqlCommand add = new SqlCommand("Procedures_AdminAddExam", connection);
@@ -96,7 +99,7 @@ namespace Milestone_3.Admin
         }
         protected void issuePayment(object sender, EventArgs e)
         {
-            string connectionString = WebConfigurationManager.ConnectionStrings["MainConnection"].ToString();
+            string connectionString = WebConfigurationManager.ConnectionStrings["con"].ToString();
             SqlConnection connection = new SqlConnection(connectionString);
 
             SqlCommand issue = new SqlCommand("Procedures_AdminIssueInstallment", connection);
@@ -111,7 +114,7 @@ namespace Milestone_3.Admin
 
         protected void updateStatus(object sender, EventArgs e)
         {
-            string connectionString = WebConfigurationManager.ConnectionStrings["MainConnection"].ToString();
+            string connectionString = WebConfigurationManager.ConnectionStrings["con"].ToString();
             SqlConnection connection = new SqlConnection(connectionString);
 
             SqlCommand update = new SqlCommand("FN_AdminCheckStudentStatus", connection);
@@ -138,21 +141,33 @@ namespace Milestone_3.Admin
 
 
             connection.Open();
-            e_message_box.Text = "";
+            //e_message_box.Text = "";
             if (e_input1.Value.Equals("") || e_input2.Value.Equals("") || e_input3.Text.Equals(""))
-                e_message_box.Text = "Failure, one of the provided boxes was left empty, please fill it and try again";
+            {
+                //e_message_box.Text = "Failure, one of the provided boxes was left empty, please fill it and try again";
+                string script = "alert('Failure, one of the provided fields was left empty, please fill it and try again');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+            }
             else if (DateTime.Parse(e_input2.Value) < DateTime.Parse(e_input1.Value))
-                e_message_box.Text = "Failure, the end date is before the start date, please try again";
+            {
+                //e_message_box.Text = "Failure, the end date is before the start date, please try again";
+                string script = "alert('Failure, the end date is before the start date, please try again');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+            }
             else
             {
                 try
                 {
                     createSemester.ExecuteNonQuery();
-                    e_message_box.Text = "Success, the semester was added";
+                    //e_message_box.Text = "Success, the semester was added";
+                    string script = "alert('Success, the semester was added');";
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
                 }
                 catch (SqlException)
                 {
-                    e_message_box.Text = "Failure, the semester code already exists, please try again";
+                    //e_message_box.Text = "Failure, the semester code already exists, please try again";
+                    string script = "alert('Failure, the semester code already exists, please try again');";
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
                 }
             }
             connection.Close();
@@ -175,13 +190,19 @@ namespace Milestone_3.Admin
 
 
             connection.Open();
-            f_message_box.Text = "";
+            //f_message_box.Text = "";
             if (f_input1.Text == "" || f_input4.Text == "" || f_input2.Value == "" || f_input3.Value == "")
-                f_message_box.Text = "Failure, one of the provided boxes was left empty, please fill it and try again";
+            {
+                //f_message_box.Text = "Failure, one of the provided boxes was left empty, please fill it and try again";
+                string script = "alert('Failure, one of the provided boxes was left empty, please fill it and try again');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+            }
             else
             {
                 createCourse.ExecuteNonQuery();
-                f_message_box.Text = "Success, the Course was added";
+                //f_message_box.Text = "Success, the Course was added";
+                string script = "alert('Success, the Course was added');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
             }
             connection.Close();
         }
@@ -198,26 +219,44 @@ namespace Milestone_3.Admin
             linkInstructorWithCourseOnSlot.Parameters.Add(new SqlParameter("@cours_id", g_input1.Value));
             linkInstructorWithCourseOnSlot.Parameters.Add(new SqlParameter("@slot_id", g_input3.Value));
             connection.Open();
-            g_message_box.Text = "";
-            if (g_input1.Value == "" || g_input2.Value == "" || g_input3.Value == "")
-                g_message_box.Text = "Failure, one of the provided boxes was left empty, please fill it and try again";
+            //g_message_box.Text = "";
+            if (g_input1.Value == "" || g_input2.Value == "" || g_input3.Value == "") 
+            {
+                //g_message_box.Text = "Failure, one of the provided boxes was left empty, please fill it and try again";
+                string script = "alert('Failure, one of the provided boxes was left empty, please fill it and try again');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+            }
             else
             {
                 try
                 {
                     if (linkInstructorWithCourseOnSlot.ExecuteNonQuery() == 0)
-                        g_message_box.Text = "Failure, this slot does not exist";
+                    {
+                        //g_message_box.Text = "Failure, this slot does not exist";
+                        string script = "alert('Failure, this slot does not exist');";
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+                    }
                     else
-                        g_message_box.Text = "Success, the Instructor was linked with the Course on the Slot";
+                    {
+                        //g_message_box.Text = "Success, the Instructor was linked with the Course on the Slot";
+                        string script = "alert('Success, the Instructor was linked with the Course on the Slot');";
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+                    }
                 }
                 catch (SqlException ex)
                 {
-                    if (ex.Message.Contains("FOREIGN KEY constraint \"FK__Slot__course_id"))
-                        g_message_box.Text = "Failure, the entered course does not exist, please try again";
+                    if (ex.Message.Contains("FOREIGN KEY constraint \"FK__Slot__course_id")) 
+                    {
+                        //g_message_box.Text = "Failure, the entered course does not exist, please try again";
+                        string script = "alert('Failure, the entered course does not exist, please try again');";
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+                    }
                     else
-                        g_message_box.Text = "Failure, the entered instructor does not exist, please try again";
-
-                    //form1.Controls.Add(new Label { Text =  ex.Message});
+                    {
+                        //g_message_box.Text = "Failure, the entered instructor does not exist, please try again";
+                        string script = "alert('Failure, the entered instructor does not exist, please try again');";
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+                    }
                 }
             }
             connection.Close();
@@ -234,21 +273,35 @@ namespace Milestone_3.Admin
             linkStudentWithAdvisor.Parameters.Add(new SqlParameter("@studentID", h_input1.Value));
             linkStudentWithAdvisor.Parameters.Add(new SqlParameter("@advisorID", h_input2.Value));
             connection.Open();
-            h_message_box.Text = "";
+            //h_message_box.Text = "";
             if (h_input1.Value == "" || h_input2.Value == "")
-                h_message_box.Text = "Failure, one of the provided boxes was left empty, please fill it and try again";
+            {
+                //h_message_box.Text = "Failure, one of the provided boxes was left empty, please fill it and try again";
+                string script = "alert('Failure, one of the provided boxes was left empty, please fill it and try again');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+            }
             else
             {
                 try
                 {
                     if (linkStudentWithAdvisor.ExecuteNonQuery() == 0)
-                        h_message_box.Text = "Failure, the entered student does not exist, please try again";
+                    {
+                        //h_message_box.Text = "Failure, the entered student does not exist, please try again";
+                        string script = "alert('Failure, the entered student does not exist, please try again');";
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+                    }
                     else
-                        h_message_box.Text = "Success, the Student was linked with the Advisor";
+                    {
+                        //h_message_box.Text = "Success, the Student was linked with the Advisor";
+                        string script = "alert('Success, the Student was linked with the Advisor');";
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+                    }
                 }
                 catch (SqlException)
                 {
-                    h_message_box.Text = "Failure, the entered advisor does not exist, please try again";
+                    //h_message_box.Text = "Failure, the entered advisor does not exist, please try again";
+                    string script = "alert('Failure, the entered advisor does not exist, please try again');";
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
                 }
             }
 
@@ -268,28 +321,61 @@ namespace Milestone_3.Admin
             linkStudentWithCourseWithInstructor.Parameters.Add(new SqlParameter("@semester_code", i_input4.Text));
 
             connection.Open();
-            i_message_box.Text = "";
-            if (i_input1.Value == "" || i_input2.Value == "" || i_input3.Value == "" || i_input4.Text == "")
-                i_message_box.Text = "Failure, one of the provided boxes was left empty, please fill it and try again";
+            //i_message_box.Text = "";
+            if (i_input1.Value == "" || i_input2.Value == "" || i_input3.Value == "" || i_input4.Text == "") 
+            { 
+                //i_message_box.Text = "Failure, one of the provided boxes was left empty, please fill it and try again";
+                string script = "alert('Failure, one of the provided boxes was left empty, please fill it and try again');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+            }
             else
             {
                 try
                 {
                     linkStudentWithCourseWithInstructor.ExecuteNonQuery();
-                    i_message_box.Text = "Success, the Student was assigned the Course with the Instructor";
+                    //i_message_box.Text = "Success, the Student was assigned the Course with the Instructor";
+                    string script = "alert('Success, the Student was assigned the Course with the Instructor');";
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
                 }
                 catch (SqlException ex)
                 {
                     if (ex.Message.Contains("FOREIGN KEY constraint \"FK__Student_I__stude"))
-                        i_message_box.Text = "Failure, the entered student does not exist, please try again";
-                    if (ex.Message.Contains("FOREIGN KEY constraint \"FK__Student_I__cours__"))
-                        i_message_box.Text = "Failure, the entered course does not exist, please try again";
-                    if (ex.Message.Contains("FOREIGN KEY constraint \"FK__Student_I__instr"))
-                        i_message_box.Text = "Failure, the entered instructor does not exist, please try again";
-                    if (ex.Message.Contains("duplicate key"))
-                        i_message_box.Text = "Failure, the entered student is already assigned this course, please try again";
+                    {
+                        //i_message_box.Text = "Failure, the entered student does not exist, please try again";
+                        string script = "alert('Failure, the entered student does not exist, please try again');";
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+                    }
+                    else if (ex.Message.Contains("FOREIGN KEY constraint \"FK__Student_I__cours__"))
+                    {
+                        //i_message_box.Text = "Failure, the entered course does not exist, please try again";
+                        string script = "alert('Failure, the entered course does not exist, please try again');";
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+                    }
+                    else if (ex.Message.Contains("FOREIGN KEY constraint \"FK__Student_I__instr"))
+                    {
+                        //i_message_box.Text = "Failure, the entered instructor does not exist, please try again";
+                        string script = "alert('Failure, the entered instructor does not exist, please try again');";
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+                    }
+                    else if (ex.Message.Contains("duplicate key"))
+                    {
+                        //i_message_box.Text = "Failure, the entered student is already assigned this course, please try again";
+                        string script = "alert('Failure, the entered student is already assigned this course, please try again');";
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+                    }
+                    else
+                    {
+                        string script = "alert('Failure, Unidentified Error, please try again');";
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+                    }
                 }
             }
+        }
+
+        protected void BackToLogin(object sender, EventArgs e)
+        {
+            Session["id"] = null;
+            Response.Redirect("~/Login/Login.aspx");
         }
     }
 }

@@ -16,7 +16,10 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <asp:Button runat="server" onclick="Back" Text="Back To Home"/>
+        <h2>
+            List of Advisors
+        </h2>
+        <hr />
         <table id="table1" runat="server">
             <tr>
                 <th>
@@ -36,6 +39,7 @@
                 </th>
             </tr>
         </table>
+        <asp:Button runat="server" onclick="Back" Text="Back To Home"/>
     </form>
 </body>
 </html>
