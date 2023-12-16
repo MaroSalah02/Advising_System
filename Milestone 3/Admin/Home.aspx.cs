@@ -38,6 +38,11 @@ namespace Milestone_3.Admin
         {
             Response.Redirect("InstructorsWithCourses.aspx");
         }
+
+        protected void viewSemesterWithOfferedCourses(object sender, EventArgs e)
+        {
+            Response.Redirect("SemesterWithCourses.aspx");
+        }
         protected void deleteCourse(object sender, EventArgs e)//(needs more testing)
         {
             string connectionString = WebConfigurationManager.ConnectionStrings["MainConnection"].ToString();
@@ -110,7 +115,7 @@ namespace Milestone_3.Admin
             SqlConnection connection = new SqlConnection(connectionString);
 
             SqlCommand update = new SqlCommand("FN_AdminCheckStudentStatus", connection);
-            int id = Int16.Parse(payment_id.Text);
+            int id = Int16.Parse(studen_financial.Text);//TODO : change to student id
             update.CommandType = CommandType.StoredProcedure;
             update.Parameters.Add(new SqlParameter("@Student_id", id));
             connection.Open();
@@ -277,7 +282,7 @@ namespace Milestone_3.Admin
                 {
                     if (ex.Message.Contains("FOREIGN KEY constraint \"FK__Student_I__stude"))
                         i_message_box.Text = "Failure, the entered student does not exist, please try again";
-                    if (ex.Message.Contains("FOREIGN KEY constraint \"FK__Student_I__cours__3D5E1FD2\""))
+                    if (ex.Message.Contains("FOREIGN KEY constraint \"FK__Student_I__cours__"))
                         i_message_box.Text = "Failure, the entered course does not exist, please try again";
                     if (ex.Message.Contains("FOREIGN KEY constraint \"FK__Student_I__instr"))
                         i_message_box.Text = "Failure, the entered instructor does not exist, please try again";
