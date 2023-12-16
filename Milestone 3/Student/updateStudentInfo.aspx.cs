@@ -26,15 +26,21 @@ namespace Milestone_3.Student
             if (sqlConnection.State == ConnectionState.Closed)
                 sqlConnection.Open();
 
-            SqlCommand sqlCommand = new SqlCommand("Procedures_StudentaddMobile",sqlConnection);
-            sqlCommand.CommandType = CommandType.StoredProcedure;
+            if (telephone_input.Text.Equals(""))
+            {
+                alert();
+            }
+            else { 
+                SqlCommand sqlCommand = new SqlCommand("Procedures_StudentaddMobile", sqlConnection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
 
-            sqlCommand.Parameters.AddWithValue("@StudentID", studentId);
+                sqlCommand.Parameters.AddWithValue("@StudentID", studentId);
 
-            sqlCommand.Parameters.AddWithValue("@mobile_number", telephone_input.Text);
-            sqlCommand.ExecuteNonQuery();
-            sqlConnection.Close();
-            Page_Load(sender,e);
+                sqlCommand.Parameters.AddWithValue("@mobile_number", telephone_input.Text);
+                sqlCommand.ExecuteNonQuery();
+                sqlConnection.Close();
+                Page_Load(sender, e);
+            }
         }
 
         private void getStudentPhone(int id)
@@ -57,5 +63,11 @@ namespace Milestone_3.Student
             c.Close();
 
         }
+        private void alert()
+        {
+            string script = "alert('There is one or more empty fields!');";
+            ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+        }
     }
+
 }

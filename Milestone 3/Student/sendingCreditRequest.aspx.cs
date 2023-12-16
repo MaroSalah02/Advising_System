@@ -29,28 +29,39 @@ namespace Milestone_3.Student
             if (sqlConnection.State == ConnectionState.Closed)
                 sqlConnection.Open();
 
-            SqlCommand sqlCommand = new SqlCommand("Procedures_StudentSendingCourseRequest", sqlConnection);
-            sqlCommand.CommandType = CommandType.StoredProcedure;
-
-            sqlCommand.Parameters.AddWithValue("@StudentID", studentId);
-            sqlCommand.Parameters.AddWithValue("@courseID", creditNumeric.Text);
-            sqlCommand.Parameters.AddWithValue("@type", "credit_hours");
-
-            sqlCommand.Parameters.AddWithValue("@comment", comment.Text);
-            int rowsAffected = sqlCommand.ExecuteNonQuery();
-            if (rowsAffected > 0)
+            if (creditNumeric.Text.Equals(""))
             {
-                statuslabel.InnerText = "success";
+                alert();
             }
             else
             {
-                statuslabel.InnerText = "failed";
+                SqlCommand sqlCommand = new SqlCommand("Procedures_StudentSendingCourseRequest", sqlConnection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
 
+                sqlCommand.Parameters.AddWithValue("@StudentID", studentId);
+                sqlCommand.Parameters.AddWithValue("@courseID", creditNumeric.Text);
+                sqlCommand.Parameters.AddWithValue("@type", "credit_hours");
+
+                sqlCommand.Parameters.AddWithValue("@comment", comment.Text);
+                int rowsAffected = sqlCommand.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    statuslabel.InnerText = "success";
+                }
+                else
+                {
+                    statuslabel.InnerText = "failed";
+
+                }
+
+                sqlConnection.Close();
             }
 
-            sqlConnection.Close();
-
-
+        }
+        private void alert()
+        {
+            string script = "alert('There is one or more empty fields!');";
+            ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
         }
     }
 }
