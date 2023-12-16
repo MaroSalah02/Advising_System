@@ -258,6 +258,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Admin\Transcript.aspx" />
+    <Content Include="TextFile1.txt" />
     <Content Include="web.config" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
