@@ -288,3 +288,5 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 /Milestone 3/Web.config
+.DS_Store
+Milestone 3/.DS_Store
