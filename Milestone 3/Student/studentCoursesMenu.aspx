@@ -10,19 +10,34 @@
     <form id="form1" runat="server">
         <div>
             <label>Optional courses in the current semester :</label>
-            <asp:GridView ID="optionalCourses" runat = "server" AutoGenerateColumns="false" >
+            <asp:GridView ID="optionalCourses" runat = "server" AutoGenerateColumns="true" >
                 <Columns>
                     <asp:BoundField DataField = "course_id" HeaderText="Course ID" />
                     <asp:BoundField DataField = "name" HeaderText="Course Name" />
                 </Columns>
             </asp:GridView>
             <label>Available courses in the current semester :</label>
-            <asp:GridView ID="availableCourses" runat = "server" AutoGenerateColumns="false" >
+            <asp:GridView ID="availableCourses" runat = "server" AutoGenerateColumns="true" >
                 <Columns>
                     <asp:BoundField DataField = "course_id" HeaderText="Course ID" />
                     <asp:BoundField DataField = "name" HeaderText="Course Name" />
                 </Columns>
-</asp:GridView>
+            </asp:GridView>
+            <label>Required courses in the current semester :</label>
+            <asp:GridView ID="requiredCourses" runat = "server" AutoGenerateColumns="true" >
+                <Columns>
+                    <asp:BoundField DataField = "course_id" HeaderText="Course ID" />
+                    <asp:BoundField DataField = "name" HeaderText="Course Name" />
+                </Columns>
+            </asp:GridView>
+            <label>Missing courses :</label>
+            <asp:GridView ID="missingCourses" runat = "server" AutoGenerateColumns="true" >
+                <Columns>
+                    <asp:BoundField DataField = "course_id" HeaderText="Course ID" />
+                    <asp:BoundField DataField = "name" HeaderText="Course Name" />
+                </Columns>
+            </asp:GridView>
+            
         </div>
     </form>
 </body>
