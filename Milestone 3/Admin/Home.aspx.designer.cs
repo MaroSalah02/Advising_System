@@ -96,15 +96,6 @@ namespace Milestone_3.Admin
         protected global::System.Web.UI.WebControls.TextBox e_input3;
 
         /// <summary>
-        /// e_message_box control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox e_message_box;
-
-        /// <summary>
         /// f_input1 control.
         /// </summary>
         /// <remarks>
@@ -148,15 +139,6 @@ namespace Milestone_3.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox f_input5;
-
-        /// <summary>
-        /// f_message_box control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox f_message_box;
 
         /// <summary>
         /// Button_1F control.
@@ -249,15 +231,6 @@ namespace Milestone_3.Admin
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl g_input3;
 
         /// <summary>
-        /// g_message_box control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox g_message_box;
-
-        /// <summary>
         /// Button_1G control.
         /// </summary>
         /// <remarks>
@@ -283,15 +256,6 @@ namespace Milestone_3.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl h_input2;
-
-        /// <summary>
-        /// h_message_box control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox h_message_box;
 
         /// <summary>
         /// Button_1H control.
@@ -337,15 +301,6 @@ namespace Milestone_3.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox i_input4;
-
-        /// <summary>
-        /// i_message_box control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox i_message_box;
 
         /// <summary>
         /// Button_1I control.

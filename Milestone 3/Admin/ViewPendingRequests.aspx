@@ -16,12 +16,15 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <asp:Button Text="Back to Home" OnClick="Back" runat="server" />
+        <h2>
+            List of All Pending Requests
+        </h2>
+        <hr />
         <table runat="server" id="table1">
             <thead>
                 <tr>
                     <th>
-Request ID
+                        Request ID
                     </th>
                     <th>
                         Request Type
@@ -47,6 +50,7 @@ Request ID
                 </tr>
             </thead>
         </table>
+        <asp:Button Text="Back to Home" OnClick="Back" runat="server" />
     </form>
 </body>
 </html>
