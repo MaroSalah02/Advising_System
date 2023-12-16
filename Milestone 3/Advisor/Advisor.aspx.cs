@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
@@ -67,12 +68,9 @@ namespace Milestone_3
             {
                 String connectstr = WebConfigurationManager.ConnectionStrings["con"].ToString();
                 SqlConnection c = new SqlConnection(connectstr);
-                SqlCommand proc = new SqlCommand("", c);
-                proc.CommandType = CommandType.StoredProcedure;
-
-                int AdvisorID = (int)Session["id"];
-                proc.Parameters.AddWithValue("@AdvisorID", AdvisorID);
-
+                int advisor_id = (int)Session["id"];
+                String query = "select * from student s where s.advisor_id = " + advisor_id;
+                SqlCommand proc = new SqlCommand(query, c);
                 c.Open();
                     SqlDataAdapter adapter = new SqlDataAdapter(proc);
                     DataTable dataTable = new DataTable();
@@ -92,15 +90,22 @@ namespace Milestone_3
                 proc.Parameters.AddWithValue("@AdvisorID", AdvisorID);
 
                 String major = textb1.Text;
-                proc.Parameters.Add(new SqlParameter("@major", major));
+                if(major.Equals(""))
+                {
+                    alert();
+                }
+                else{
+                    proc.Parameters.Add(new SqlParameter("@major", major));
 
-                c.Open();
-                SqlDataAdapter adapter = new SqlDataAdapter(proc);
-                DataTable dataTable = new DataTable();
-                adapter.Fill(dataTable);
-                View_Students.DataSource = dataTable;
-                View_Students.DataBind();
-                c.Close();
+                    c.Open();
+                        SqlDataAdapter adapter = new SqlDataAdapter(proc);
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+                        View_Students.DataSource = dataTable;
+                        View_Students.DataBind();
+                    c.Close();
+                }
+
             }
             else if (selectedOption.Equals("View all requests"))
             {
@@ -147,26 +152,50 @@ namespace Milestone_3
                 SqlConnection c = new SqlConnection(connectstr);
                 SqlCommand proc = new SqlCommand("Procedures_AdvisorCreateGP", c);
                 proc.CommandType = CommandType.StoredProcedure;
-                String Semester_code = textb2.Text;
-                proc.Parameters.Add(new SqlParameter("@Semester_code", Semester_code));
 
-                String expected_graduation_date = textb3.Text;
-                DateTime selectedDate;
-                DateTime.TryParse(expected_graduation_date, out selectedDate);
-                proc.Parameters.Add(new SqlParameter("@expected_graduation_date", selectedDate));
+                if(textb2.Text.Equals("") || textb3.Text.Equals("") || textb4.Text.Equals("") || textb5.Text.Equals(""))
+                {
+                    alert();
+                }
+                else
+                {
+                    String Semester_code = textb2.Text;
+                    proc.Parameters.Add(new SqlParameter("@Semester_code", Semester_code));
 
-                int sem_credit_hours = Int16.Parse(textb4.Text);
-                proc.Parameters.Add(new SqlParameter("@sem_credit_hours", sem_credit_hours));
+                    String expected_graduation_date = textb3.Text;
+                    DateTime selectedDate;
+                    DateTime.TryParse(expected_graduation_date, out selectedDate);
+                    proc.Parameters.Add(new SqlParameter("@expected_graduation_date", selectedDate));
 
-                int AdvisorID = (int)Session["id"];
-                proc.Parameters.AddWithValue("@advisor_id", AdvisorID);
+                    int sem_credit_hours = Int16.Parse(textb4.Text);
+                    proc.Parameters.Add(new SqlParameter("@sem_credit_hours", sem_credit_hours));
 
-                int student_id = Int16.Parse(textb5.Text);
-                proc.Parameters.Add(new SqlParameter("@student_id", student_id));
+                    int AdvisorID = (int)Session["id"];
+                    proc.Parameters.AddWithValue("@advisor_id", AdvisorID);
 
-                c.Open();
-                proc.ExecuteNonQuery();
-                c.Close();
+                    int student_id = Int16.Parse(textb5.Text);
+                    proc.Parameters.Add(new SqlParameter("@student_id", student_id));
+
+                    try
+                    {
+                        c.Open();
+                        int rows_affected = proc.ExecuteNonQuery();
+                        if (rows_affected > 0)
+                        {
+                            correct_or_not.InnerText = "Status is: Done";
+                        }
+                        else
+                        {
+                            correct_or_not.InnerText = "Status is: Failed";
+                        }
+                        c.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        correct_or_not.InnerText = "Status is: logic error";
+                    }
+                }
+
             }
             else if (selectedOption.Equals("Insert courses for a specific graduation plan"))
             {
@@ -175,18 +204,41 @@ namespace Milestone_3
                 SqlCommand proc = new SqlCommand("Procedures_AdvisorAddCourseGP", c);
                 proc.CommandType = CommandType.StoredProcedure;
 
-                int student_id = Int16.Parse(textb6.Text);
-                proc.Parameters.Add(new SqlParameter("@student_id", student_id));
+                if (textb6.Text.Equals("") || textb7.Text.Equals("") || textb8.Text.Equals(""))
+                {
+                    alert();
+                }
+                else
+                {
+                    int student_id = Int16.Parse(textb6.Text);
+                    proc.Parameters.Add(new SqlParameter("@student_id", student_id));
 
-                String Semester_code = textb7.Text;
-                proc.Parameters.Add(new SqlParameter("@Semester_code", Semester_code));
+                    String Semester_code = textb7.Text;
+                    proc.Parameters.Add(new SqlParameter("@Semester_code", Semester_code));
 
-                String Course_Name = textb8.Text;
-                proc.Parameters.Add(new SqlParameter("@course_name", Course_Name));
+                    String Course_Name = textb8.Text;
+                    proc.Parameters.Add(new SqlParameter("@course_name", Course_Name));
+                    try
+                    {
+                        c.Open();
+                        int rows_affected = proc.ExecuteNonQuery();
+                        if (rows_affected > 0)
+                        {
+                            correct_or_not.InnerText = "Status is: Done";
+                        }
+                        else
+                        {
+                            correct_or_not.InnerText = "Status is: Failed";
+                        }
+                        c.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        correct_or_not.InnerText = "Status is: logic error";
+                    }
 
-                c.Open();
-                    proc.ExecuteNonQuery();
-                c.Close();
+                }
+
             }
         }
         protected void accept_or_reject()
@@ -199,16 +251,37 @@ namespace Milestone_3
                 SqlCommand proc = new SqlCommand("Procedures_AdvisorApproveRejectCHRequest", c);
                 proc.CommandType = CommandType.StoredProcedure;
 
-                int request_id = Int16.Parse(textb14.Text);
-                proc.Parameters.Add(new SqlParameter("@requestID", request_id));
+                if (textb14.Text.Equals("") || textb15.Text.Equals(""))
+                {
+                    alert();
+                }
+                else
+                {
+                    int request_id = Int16.Parse(textb14.Text);
+                    proc.Parameters.Add(new SqlParameter("@requestID", request_id));
 
-                String Semester_code = textb15.Text;
-                proc.Parameters.Add(new SqlParameter("@current_sem_code", Semester_code));
+                    String Semester_code = textb15.Text;
+                    proc.Parameters.Add(new SqlParameter("@current_sem_code", Semester_code));
 
-                c.Open();
-                    proc.ExecuteNonQuery();
-                c.Close();
-
+                    try
+                    {
+                        c.Open();
+                        int rows_affected = proc.ExecuteNonQuery();
+                        if (rows_affected > 0)
+                        {
+                            correct_or_not.InnerText = "Status is: Done";
+                        }
+                        else
+                        {
+                            correct_or_not.InnerText = "Status is: Failed";
+                        }
+                        c.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        correct_or_not.InnerText = "Status is: logic error";
+                    }
+                }
             }
             else
             {
@@ -217,15 +290,38 @@ namespace Milestone_3
                 SqlCommand proc = new SqlCommand("Procedures_AdvisorApproveRejectCourseRequest", c);
                 proc.CommandType = CommandType.StoredProcedure;
 
-                int request_id = Int16.Parse(textb14.Text);
-                proc.Parameters.Add(new SqlParameter("@requestID", request_id));
+                if (textb14.Text.Equals("") || textb15.Text.Equals(""))
+                {
+                    alert();
+                }
+                else
+                {
+                    int request_id = Int16.Parse(textb14.Text);
+                    proc.Parameters.Add(new SqlParameter("@requestID", request_id));
 
-                String Semester_code = textb15.Text;
-                proc.Parameters.Add(new SqlParameter("@current_semester_code", Semester_code));
+                    String Semester_code = textb15.Text;
+                    proc.Parameters.Add(new SqlParameter("@current_semester_code", Semester_code));
 
-                c.Open();
-                proc.ExecuteNonQuery();
-                c.Close();
+                    try
+                    {
+                        c.Open();
+                        int rows_affected = proc.ExecuteNonQuery();
+                        if (rows_affected > 0)
+                        {
+                            correct_or_not.InnerText = "Status is: Done";
+                        }
+                        else
+                        {
+                            correct_or_not.InnerText = "Status is: Failed";
+                        }
+                        c.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        correct_or_not.InnerText = "Status is: logic error";
+                    }
+                }
+
             }
         }
         protected void proceed_Click(object sender, EventArgs e)
@@ -246,17 +342,40 @@ namespace Milestone_3
                 SqlCommand proc = new SqlCommand("Procedures_AdvisorUpdateGP", c);
                 proc.CommandType = CommandType.StoredProcedure;
 
-                String expected_graduation_date = textb9.Text;
-                DateTime selectedDate;
-                DateTime.TryParse(expected_graduation_date, out selectedDate);
-                proc.Parameters.Add(new SqlParameter("@expected_grad_date", selectedDate));
+                if (textb9.Text.Equals("") || textb10.Text.Equals(""))
+                {
+                    alert();
+                }
+                else
+                {
+                    String expected_graduation_date = textb9.Text;
+                    DateTime selectedDate;
+                    DateTime.TryParse(expected_graduation_date, out selectedDate);
+                    proc.Parameters.Add(new SqlParameter("@expected_grad_date", selectedDate));
 
-                int student_id = Int16.Parse(textb10.Text);
-                proc.Parameters.Add(new SqlParameter("@studentID", student_id));
+                    int student_id = Int16.Parse(textb10.Text);
+                    proc.Parameters.Add(new SqlParameter("@studentID", student_id));
 
-                c.Open();
-                proc.ExecuteNonQuery();
-                c.Close();
+                    try
+                    {
+                        c.Open();
+                        int rows_affected = proc.ExecuteNonQuery();
+                        if (rows_affected > 0)
+                        {
+                            correct_or_not.InnerText = "Status is: Done";
+                        }
+                        else
+                        {
+                            correct_or_not.InnerText = "Status is: Failed";
+                        }
+                        c.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        correct_or_not.InnerText = "Status is: logic error";
+                    }
+                }
+
             }
             else if (selectedOption.Equals("Delete course from a certain graduation plan in a certain semester"))
             {
@@ -265,18 +384,41 @@ namespace Milestone_3
                 SqlCommand proc = new SqlCommand("Procedures_AdvisorDeleteFromGP", c);
                 proc.CommandType = CommandType.StoredProcedure;
 
-                int student_id = Int16.Parse(textb11.Text);
-                proc.Parameters.Add(new SqlParameter("@studentID", student_id));
+                if (textb11.Text.Equals("") || textb12.Text.Equals("") || textb13.Text.Equals(""))
+                {
+                    alert();
+                }
+                else
+                {
+                    int student_id = Int16.Parse(textb11.Text);
+                    proc.Parameters.Add(new SqlParameter("@studentID", student_id));
 
-                String Semester_code = textb12.Text;
-                proc.Parameters.Add(new SqlParameter("@sem_code", Semester_code));
+                    String Semester_code = textb12.Text;
+                    proc.Parameters.Add(new SqlParameter("@sem_code", Semester_code));
 
-                int course_id = Int16.Parse(textb13.Text);
-                proc.Parameters.Add(new SqlParameter("@courseID", course_id));
+                    int course_id = Int16.Parse(textb13.Text);
+                    proc.Parameters.Add(new SqlParameter("@courseID", course_id));
 
-                c.Open();
-                proc.ExecuteNonQuery();
-                c.Close();
+                    try
+                    {
+                        c.Open();
+                        int rows_affected = proc.ExecuteNonQuery();
+                        if (rows_affected > 0)
+                        {
+                            correct_or_not.InnerText = "Status is: Done";
+                        }
+                        else
+                        {
+                            correct_or_not.InnerText = "Status is: Failed";
+                        }
+                        c.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        correct_or_not.InnerText = "Status is: logic error";
+                    }
+                }
+
             }
             else if (selectedOption.Equals("Approve or reject extra credit hours request") || selectedOption.Equals("Approve or reject extra courses request"))
             {
@@ -302,5 +444,14 @@ namespace Milestone_3
                 return advisorName;
             c.Close();
         }
+        private void alert()
+        {
+            string script = "alert('There is an empty field!');";
+            ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+        }
+        //protected void back_to_main(object sender, EventArgs e)
+        //{
+        //    Response.Redirect("~/Login/login.aspx");
+        //}
     }
 }
