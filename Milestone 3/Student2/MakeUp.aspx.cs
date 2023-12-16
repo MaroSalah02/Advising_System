@@ -42,7 +42,7 @@ namespace Portal
                 return;
             }
 
-            String connStr = WebConfigurationManager.ConnectionStrings["Server"].ToString();
+            String connStr = WebConfigurationManager.ConnectionStrings["con"].ToString();
             SqlConnection conn = new SqlConnection(connStr);
 
             if (type == "First")

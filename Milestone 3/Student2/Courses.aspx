@@ -23,7 +23,7 @@
                             selectcommand="SELECT course_id as [Course ID], name as [Name], major as [Major], is_offered as [Offered],
                             credit_hours as [Credit Hours], semester as [Semester], preRequsite_course_id as [Prerequisite ID],
                             preRequsite_course_name as [Prerequisite Name] FROM view_Course_prerequisites ORDER BY course_id"
-                            connectionstring="<%$ connectionStrings:Server %>" runat="server"/>
+                            connectionstring="<%$ connectionStrings:con %>" runat="server"/>
 
                         <asp:gridview id="prereqTable" datasourceid="prereqData" autogeneratecolumns="True"
                             emptydatatext="No Data" allowpaging="True" runat="server" pagesize="10"
@@ -40,7 +40,7 @@
                             selectcommand="SELECT CourseID as [Course ID], Course as [Course Name], slot_id as [Slot ID], day as [Day],
                             time as [Time], location as [Location], instructor_id as [Instructor ID],
                             Instructor as [Instructor Name] FROM Courses_Slots_Instructor ORDER BY CourseID"
-                            connectionstring="<%$ connectionStrings:Server %>" runat="server"/>
+                            connectionstring="<%$ connectionStrings:con %>" runat="server"/>
 
                         <asp:gridview id="slotTable" datasourceid="slotData" autogeneratecolumns="True"
                             emptydatatext="No Data" allowpaging="True" runat="server" pagesize="10"

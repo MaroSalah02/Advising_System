@@ -13,7 +13,7 @@ namespace Portal
 {
     public partial class Instructor : System.Web.UI.Page
     {
-        SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["Server"].ToString());
+        SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings["con"].ToString());
         protected void Page_Load(object sender, EventArgs e)
         {
 
