@@ -22,10 +22,11 @@
                 <asp:Button ID="Button_1C" runat="server" Text="View all Students With Advisors" onclick="viewStudentsWithAdvisors"/>
                 <asp:Button ID="Button_1D" runat="server" Text="View all Pending Requests" onclick="viewPendingRequests"/>
                 <asp:Button ID="Button_1J" runat="server" Text="View Instructirs With Their Assigned Courses" onclick="viewInstructirsWithAssignedCourses"/>
-                <asp:Button ID="Button2" runat="server" Text="View details for all payments with students" onClick="viewPayments" />
+                <asp:Button ID="Button_1K" runat="server" Text="View Semesters with their Offered Courses" onclick="viewSemesterWithOfferedCourses"/>
+                <asp:Button ID="Button_2D" runat="server" Text="View details for all payments with students" onClick="viewPayments" />
             </div>
 
-            <h3>Add Information</h3>
+            <h3>Add Entries</h3>
             <div>
                 <label>Create a New Semester</label>
                 <div>
@@ -45,6 +46,18 @@
                     <input type="checkbox" runat="server" id="f_input5" />
                     <asp:TextBox runat="server" ID="f_message_box" ReadOnly="true"></asp:TextBox>
                     <asp:Button runat="server" Text="Add Course" OnClick="addCourse" ID="Button_1F" />
+                </div>
+                <label>Create a New Makeup Exam</label>
+                <div>
+                    <asp:TextBox ID="type" runat="server" placeHolder="Exam Type"></asp:TextBox>
+                    <asp:TextBox ID="date" runat="server" type="datetime-local"></asp:TextBox>
+                    <asp:TextBox ID="courseID" runat="server" placeHolder="Course ID"></asp:TextBox>
+                    <asp:Button ID="Button1" runat="server" Text="Add Exam" />
+                </div>
+                <label>Issue Installments of a Certain Payment</label>
+                <div>
+                    <asp:TextBox ID="payment_id" runat="server" placeholder="Payment ID"></asp:TextBox>
+                    <asp:Button ID="payment" runat="server" Text="Issue Installments" OnClick="issuePayment" />
                 </div>
             </div>
 
@@ -78,79 +91,30 @@
             </div>
         </div>
 
-        <p>
-            <asp:Label ID="Label1" runat="server" Text="Please insert Course ID you want to delete"></asp:Label>
-        </p>
-        <p>
-            <asp:TextBox ID="c_id" runat="server"></asp:TextBox>
-        </p>
-        <p>
-            <asp:Button ID="delete" runat="server" Text="Delete" OnClick="deleteCourse" />
-        </p>
-        <h3>
-            <asp:Label ID="Label2" runat="server" Text="Delete slot of a certain course"></asp:Label>
-        </h3>
-        <asp:TextBox ID="semster_id" runat="server"></asp:TextBox>
-        <br />
-        <br />
-        <asp:Button ID="del" runat="server" Text="Delete" OnClick="deleteSlot" />
-        <br />
-        <br />
-        <h3>
-            <asp:Label ID="Label3" runat="server" Text="Please enter the details for the course you want to add a makeup exam for"></asp:Label></h3>
-        <p>
-            <asp:TextBox ID="type" runat="server" placeHolder="Type"></asp:TextBox>
-        </p>
-        <p>
+        <h3>Delete Entities</h3>
+        <div>
+            <label>Delete a course along with its related slots</label>
+            <div>
+                <asp:TextBox ID="c_id" runat="server" placeholder="Course ID"></asp:TextBox>
+                <asp:Button ID="delete" runat="server" Text="Delete Course & Slots" OnClick="deleteCourse" />
+            </div>
+            <label>Delete a slot of a certain course</label>
+            <div>
+                <asp:TextBox ID="semster_id" runat="server" placeholder="Course ID"></asp:TextBox>
+                <asp:Button ID="del" runat="server" Text="Delete Slot" OnClick="deleteSlot" />
+            </div>
+        </div>
+        
+        <h3>Update Entities</h3>
+        <div>
+            <label>Update Student Financial Status</label>
+            <div>
+                <asp:TextBox ID="studen_financial" runat="server" placeholder="Student ID"></asp:TextBox>
+                <asp:Button ID="Button3" runat="server" Text="Update" OnClick="updateStatus" />
+            </div>
+        </div>
 
 
-            <asp:TextBox ID="date" runat="server" type="datetime-local"></asp:TextBox>
-
-
-
-
-        </p>
-
-
-        <asp:TextBox ID="courseID" runat="server" placeHolder="Course ID"></asp:TextBox>
-        <br />
-        <br />
-        <asp:Button ID="Button1" runat="server" Text="Add" />
-
-
-        <br />
-        <br />
-        <h3>
-            <asp:Label ID="Label4" runat="server" Text="Please enter Payment ID you want to issue installments to"></asp:Label></h3>
-        <asp:TextBox ID="payment_id" runat="server"></asp:TextBox>
-
-
-
-        <br />
-        <asp:Button ID="payment" runat="server" Text="Issue" OnClick="issuePayment" />
-
-
-
-        <br />
-        <br />
-        <asp:Label ID="Label5" runat="server" Text="Insert Student ID you want to update his financial status"></asp:Label>
-
-
-
-        <br />
-
-
-
-        <br />
-        <asp:Button ID="Button3" runat="server" Text="Update" OnClick="updateStatus" />
-
-
-        <br />
-        <br />
-
-
-        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-        <br />
     </form>
 </body>
 </html>
