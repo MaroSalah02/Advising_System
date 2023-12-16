@@ -67,6 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Admin\activeStudent.aspx" />
     <Content Include="Admin\Home.aspx" />
     <Content Include="Admin\InstructorsWithCourses.aspx" />
     <Content Include="Admin\SemesterWithCourses.aspx" />
@@ -75,6 +76,7 @@
     <Content Include="Admin\ViewPendingRequests.aspx" />
     <Content Include="Admin\ViewStudentsWithAdvisors.aspx" />
     <Content Include="Advisor\Advisor.aspx" />
+    <Content Include="Admin\GraduationPlans.aspx" />
     <Content Include="Login\Login.aspx" />
     <Content Include="Advisor\Advisor.css" />
     <Content Include="Admin\Payments.aspx" />
@@ -85,9 +87,15 @@
     <Content Include="Student\studentCoursesMenu.aspx" />
     <Content Include="Student\studentMainMenu.aspx" />
     <Content Include="Student\updateStudentInfo.aspx" />
-    <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\activeStudent.aspx.cs">
+      <DependentUpon>activeStudent.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\activeStudent.aspx.designer.cs">
+      <DependentUpon>activeStudent.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -143,6 +151,13 @@
     </Compile>
     <Compile Include="Advisor\Advisor.aspx.designer.cs">
       <DependentUpon>Advisor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\GraduationPlans.aspx.cs">
+      <DependentUpon>GraduationPlans.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\GraduationPlans.aspx.designer.cs">
+      <DependentUpon>GraduationPlans.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -208,14 +223,23 @@
     <Compile Include="Student\updateStudentInfo.aspx.designer.cs">
       <DependentUpon>updateStudentInfo.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\Transcript.aspx.cs">
+      <DependentUpon>Transcript.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Transcript.aspx.designer.cs">
+      <DependentUpon>Transcript.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
+    <Content Include="Admin\Transcript.aspx" />
+    <Content Include="web.config" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
     </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup />
