@@ -78,9 +78,19 @@
     <Content Include="Advisor\Advisor.aspx" />
     <Content Include="Login\Login.aspx" />
     <Content Include="Advisor\Advisor.css" />
+<<<<<<< Updated upstream
     <Content Include="Student\studentCoursesMenu.aspx" />
     <Content Include="Student\studentMainMenu.aspx" />
     <Content Include="Student\updateStudentInfo.aspx" />
+=======
+<<<<<<< HEAD
+    <Content Include="Admin\Payments.aspx" />
+=======
+    <Content Include="Student\studentCoursesMenu.aspx" />
+    <Content Include="Student\studentMainMenu.aspx" />
+    <Content Include="Student\updateStudentInfo.aspx" />
+>>>>>>> 6827f48c6afd9b0030bd7431907637cbb552755d
+>>>>>>> Stashed changes
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +156,13 @@
     </Compile>
     <Compile Include="Login\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Payments.aspx.cs">
+      <DependentUpon>Payments.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Payments.aspx.designer.cs">
+      <DependentUpon>Payments.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Student\studentCoursesMenu.aspx.cs">
