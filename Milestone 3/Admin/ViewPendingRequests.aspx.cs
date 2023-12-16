@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
@@ -15,7 +16,7 @@ namespace Milestone_3.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            String ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MainConnection"].ToString();
+            String ConnectionString = ConfigurationManager.ConnectionStrings["MainConnection"].ToString();
             SqlConnection connection = new SqlConnection(ConnectionString);
 
             SqlCommand retrievePendingRequest = new SqlCommand("SELECT * FROM all_Pending_Requests", connection);
