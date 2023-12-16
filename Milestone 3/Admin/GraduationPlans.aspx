@@ -11,7 +11,7 @@
         <asp:Button ID="Button1" runat="server" Text="Back to home" OnClick="Back" />
 
         <br />
-        <asp:TextBox ID="studentID" runat="server" type="number"></asp:TextBox>
+        <asp:TextBox ID="studentID" runat="server" placeholder="Student ID" type="number"></asp:TextBox>
         <asp:Button ID="Button2" runat="server" Text="View" OnClick="get" />
         <div>
             <asp:GridView ID="View_Students" runat="server" AutoGenerateColumns="True" AlternatingRowStyle-BackColor="lightgray" HeaderStyle-BackColor="wheat" EmptyDataText="No Data Found" style="text-align:center;width:100%;"></asp:GridView>

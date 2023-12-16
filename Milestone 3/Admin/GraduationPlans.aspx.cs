@@ -23,7 +23,7 @@ namespace Milestone_3
         }
         protected void get(object sender, EventArgs e)
         {
-            string connectionString = WebConfigurationManager.ConnectionStrings["MainConnection"].ToString();
+            string connectionString = WebConfigurationManager.ConnectionStrings["con"].ToString();
             SqlConnection connection = new SqlConnection(connectionString);
             int id = Int16.Parse(studentID.Text);
             SqlCommand retriveAdvisors = new SqlCommand("select* from FN_StudentViewGP(" + id + ")", connection);

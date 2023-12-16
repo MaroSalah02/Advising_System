@@ -19,7 +19,7 @@ namespace Milestone_3
                                                              //fund_percentage decimal,status number,student_id,
                                                              //semester_code string
         {
-            string connectionString = WebConfigurationManager.ConnectionStrings["MainConnection"].ToString();
+            string connectionString = WebConfigurationManager.ConnectionStrings["con"].ToString();
             SqlConnection connection = new SqlConnection(connectionString);
 
             SqlCommand retriveAdvisors = new SqlCommand("select* from Student_Payment", connection);

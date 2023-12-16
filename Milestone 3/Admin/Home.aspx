@@ -28,6 +28,9 @@
             </div>
             <div class="Button_Group" style="text-align:center">
                 <asp:Button ID="Button_2D" runat="server" Text="View details for all payments with students" onClick="viewPayments" />
+                <asp:Button ID="Button_2G" runat="server" Text="View details of active students" onClick="fetchActiveStudents" />
+                <asp:Button ID="Button_2H" runat="server" Text="View all graduation plans along with their initiated advisors" onClick="viewGradPlans" />
+                <asp:Button ID="Button_2I" runat="server" Text="View all students' transcript details" onClick="viewTranscripts" />
             </div>
 
             <h3>Add Entries</h3>
