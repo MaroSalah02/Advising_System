@@ -15,7 +15,10 @@ namespace Milestone_3.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["id"] == null || !Session["id"].Equals("-1"))
+            {
+                Response.Redirect("~/Login/Login.aspx");
+            }
         }
 
         protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -65,7 +68,9 @@ namespace Milestone_3.Admin
 
                 c.Open();
                     proc.ExecuteNonQuery();
-                    Response.Write("New student id is " + result.Value.ToString());
+                    String alert = "New student id is " + result.Value.ToString();
+                    string script = "alert('"+alert+"');";
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
                 c.Close();
             }
         }
@@ -108,9 +113,16 @@ namespace Milestone_3.Admin
 
                 c.Open();
                     proc.ExecuteNonQuery();
-                    Response.Write("New advisor id is " + result.Value.ToString());
+                    String alert = "New advisor id is " + result.Value.ToString();
+                    string script = "alert('"+alert+"');";
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
                 c.Close();
             }
+        }
+
+        protected void Back(object sender, EventArgs e)
+        {
+            Response.Redirect("Home.aspx");
         }
     }
 }
