@@ -26,6 +26,7 @@
                 <asp:Button ID="Button_1J" runat="server" Text="View Instructirs With Their Assigned Courses" onclick="viewInstructirsWithAssignedCourses"/>
                 <asp:Button ID="Button_1K" runat="server" Text="View Semesters with their Offered Courses" onclick="viewSemesterWithOfferedCourses"/>
             </div>
+            <br />
             <div class="Button_Group" style="text-align:center">
                 <asp:Button ID="Button_2D" runat="server" Text="View details for all payments with students" onClick="viewPayments" />
                 <asp:Button ID="Button_2G" runat="server" Text="View details of active students" onClick="fetchActiveStudents" />
@@ -120,9 +121,10 @@
                 <asp:Button ID="Button3" runat="server" Text="Update" OnClick="updateStatus" />
             </div>
         </div>
-
+        <br />
         
         <asp:Button Text="Back to Login" OnClick="BackToLogin" runat="server" /></asp:Button>
+        <asp:Button Text="Registration Page" OnClick="ToRegistration" runat="server" /></asp:Button>
     </form>
 </body>
 </html>

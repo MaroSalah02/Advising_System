@@ -475,5 +475,10 @@ namespace Milestone_3.Admin
             Session["id"] = null;
             Response.Redirect("~/Login/Login.aspx");
         }
+
+        protected void ToRegistration(object sender, EventArgs e)
+        {
+            Response.Redirect("NewRegister.aspx");
+        }
     }
 }
