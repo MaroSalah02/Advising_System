@@ -25,16 +25,29 @@ namespace Milestone_3
         {
             string connectionString = WebConfigurationManager.ConnectionStrings["con"].ToString();
             SqlConnection connection = new SqlConnection(connectionString);
-            int id = Int16.Parse(studentID.Text);
-            SqlCommand retriveAdvisors = new SqlCommand("select* from FN_StudentViewGP(" + id + ")", connection);
+            try
+            {
+                int id = Int16.Parse(studentID.Text);
+                SqlCommand retriveAdvisors = new SqlCommand("select* from FN_StudentViewGP(" + id + ")", connection);
 
-            connection.Open();
-            SqlDataAdapter adapter = new SqlDataAdapter(retriveAdvisors);
-            DataTable dataTable = new DataTable();
-            adapter.Fill(dataTable);
-            View_Students.DataSource = dataTable;
-            View_Students.DataBind();
-        }
+                connection.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter(retriveAdvisors);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                View_Students.DataSource = dataTable;
+                View_Students.DataBind();
+            }
+            catch (FormatException)
+            {
+                string script = "alert('Failure, The provided field was left empty, please try again');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+            }
+            catch (OverflowException)
+            {
+                string script = "alert('Failure, The provided was too large, please try again');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+            }
+           }
         protected void Back(object sender, EventArgs e)
         {
             Response.Redirect("Home.aspx");

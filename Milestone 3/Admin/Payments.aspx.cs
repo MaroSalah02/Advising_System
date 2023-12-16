@@ -14,10 +14,7 @@ namespace Milestone_3
 {
     public partial class Payments : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e) //studentID,f_name,l_name,payment_id int,amount
-                                                             //int,startdate ,deadline datetime,n_installments
-                                                             //fund_percentage decimal,status number,student_id,
-                                                             //semester_code string
+        protected void Page_Load(object sender, EventArgs e) 
         {
             string connectionString = WebConfigurationManager.ConnectionStrings["con"].ToString();
             SqlConnection connection = new SqlConnection(connectionString);
