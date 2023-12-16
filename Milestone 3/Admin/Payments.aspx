@@ -36,26 +36,8 @@
     <form id="form1" runat="server">
         <div>
             <asp:Button ID="Button1" runat="server" Text="Back to home" onClick="Back" />
-            <table id="table1" runat="server">
-                <tr>
-                    <th>studentID
-                    </th>
-                    <th>f_name
-                    </th>
-                    <th>l_name
-                    </th>
-                    <th class="auto-style8">semester_code
-                    </th>
-                    <th class="auto-style7">payment_id
-                    </th><th class="auto-style6">amount
-                    </th><th class="auto-style5">startdate
-                    </th><th class="auto-style4">deadline
-                    </th><th class="auto-style3">n_installments
-                    </th><th class="auto-style2">fund_percentage
-                    </th><th class="auto-style1">status
-                    </th>
-                </tr>
-            </table>
+            <asp:GridView ID="View_Students" runat="server" AutoGenerateColumns="True" AlternatingRowStyle-BackColor="lightgray" HeaderStyle-BackColor="wheat" EmptyDataText="No Data Found" Style="text-align: center; width: 100%;"></asp:GridView>
+
         </div>
 
     </form>
