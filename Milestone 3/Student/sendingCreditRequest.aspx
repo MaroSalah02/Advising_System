@@ -9,6 +9,7 @@
 <body>
     <form id="form1" runat="server">
         <div>
+            <asp:HyperLink  runat="server" NavigateUrl="~/Student/studentMainMenu.aspx" style="color:firebrick; text-decoration:none;">Return to Main menu page</asp:HyperLink><br />
             <label runat="server" id ="statuslabel"></label><br />
             <asp:Label>credit hours:</asp:Label>
             <asp:TextBox ID="creditNumeric" type="number" runat="server" min ="0"></asp:TextBox>

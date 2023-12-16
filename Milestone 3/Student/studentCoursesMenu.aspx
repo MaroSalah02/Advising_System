@@ -9,6 +9,7 @@
 <body>
     <form id="form1" runat="server">
         <div>
+            <asp:HyperLink  runat="server" NavigateUrl="~/Student/studentMainMenu.aspx" style="color:firebrick; text-decoration:none;">Return to Main menu page</asp:HyperLink><br />
             <label>Optional courses in the current semester :</label>
             <asp:GridView ID="optionalCourses" runat = "server" AutoGenerateColumns="true" >
                 <Columns>

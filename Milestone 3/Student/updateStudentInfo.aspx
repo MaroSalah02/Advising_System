@@ -9,7 +9,7 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            
+            <asp:HyperLink  runat="server" NavigateUrl="~/Student/studentMainMenu.aspx" style="color:firebrick; text-decoration:none;">Return to Main menu page</asp:HyperLink><br />
             <label>Current Telephone Number :</label>
                 <asp:GridView ID="phones" runat = "server" AutoGenerateColumns="false" >
                     <Columns>

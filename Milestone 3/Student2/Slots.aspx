@@ -7,6 +7,7 @@
     <title>Slots</title>
 </head>
 <body>
+    <asp:HyperLink  runat="server" NavigateUrl="~/Student/studentMainMenu.aspx" style="color:firebrick; text-decoration:none;">Return to Main menu page</asp:HyperLink><br />
     <form id="form1" runat="server">
         <div>
 

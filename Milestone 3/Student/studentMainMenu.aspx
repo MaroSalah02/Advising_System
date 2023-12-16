@@ -9,8 +9,11 @@
 <body>
     <form id="form1" runat="server">
         <div>
+
+            <asp:HyperLink  runat="server" NavigateUrl="~/Login/login.aspx" style="color:firebrick; text-decoration:none;">Return to login page</asp:HyperLink><br />
             <p>Hello </p>
             <p id="student_Name" runat="server">Student Name</p> 
+
             <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="./updateStudentInfo.aspx" Text="Update Student Info" /> <br />
             <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="./studentCoursesMenu.aspx" Text="Courses Section" />
             <h3>Requests</h3>
