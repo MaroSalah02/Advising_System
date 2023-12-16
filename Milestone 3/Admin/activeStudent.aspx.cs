@@ -16,7 +16,7 @@ namespace Milestone_3
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string connectionString = WebConfigurationManager.ConnectionStrings["MainConnection"].ToString();
+            string connectionString = WebConfigurationManager.ConnectionStrings["con"].ToString();
             SqlConnection connection = new SqlConnection(connectionString);
 
             SqlCommand retriveAdvisors = new SqlCommand("select* from  view_Students ", connection);

@@ -69,6 +69,33 @@ namespace Milestone_3.Admin
         protected global::System.Web.UI.WebControls.Button Button_2D;
 
         /// <summary>
+        /// Button_2G control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button_2G;
+
+        /// <summary>
+        /// Button_2H control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button_2H;
+
+        /// <summary>
+        /// Button_2I control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button_2I;
+
+        /// <summary>
         /// e_input1 control.
         /// </summary>
         /// <remarks>

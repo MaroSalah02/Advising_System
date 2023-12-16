@@ -13,17 +13,17 @@ INSERT INTO Course(name, major, is_offered, credit_hours, semester)  VALUES
 --
 
 -- Adding 10 records to the Instructor table
-INSERT INTO Instructor(name, email, faculty, office) VALUES
-( 'Professor Smith', 'prof.smith@example.com', 'MET', 'Office A'),
-( 'Professor Johnson', 'prof.johnson@example.com', 'MET', 'Office B'),
-( 'Professor Brown', 'prof.brown@example.com', 'MET', 'Office C'),
-( 'Professor White', 'prof.white@example.com', 'MET', 'Office D'),
-( 'Professor Taylor', 'prof.taylor@example.com', 'Mechatronics', 'Office E'),
-( 'Professor Black', 'prof.black@example.com', 'Mechatronics', 'Office F'),
-( 'Professor Lee', 'prof.lee@example.com', 'Mechatronics', 'Office G'),
-( 'Professor Miller', 'prof.miller@example.com', 'Mechatronics', 'Office H'),
-( 'Professor Davis', 'prof.davis@example.com', 'IET', 'Office I'),
-( 'Professor Moore', 'prof.moore@example.com', 'IET', 'Office J');
+INSERT INTO Instructor(instructor_id,name, email, faculty, office) VALUES
+(1, 'Professor Smith', 'prof.smith@example.com', 'MET', 'Office A'),
+(2, 'Professor Johnson', 'prof.johnson@example.com', 'MET', 'Office B'),
+(3, 'Professor Brown', 'prof.brown@example.com', 'MET', 'Office C'),
+(4, 'Professor White', 'prof.white@example.com', 'MET', 'Office D'),
+(5, 'Professor Taylor', 'prof.taylor@example.com', 'Mechatronics', 'Office E'),
+(6, 'Professor Black', 'prof.black@example.com', 'Mechatronics', 'Office F'),
+(7, 'Professor Lee', 'prof.lee@example.com', 'Mechatronics', 'Office G'),
+(8, 'Professor Miller', 'prof.miller@example.com', 'Mechatronics', 'Office H'),
+(9, 'Professor Davis', 'prof.davis@example.com', 'IET', 'Office I'),
+(10, 'Professor Moore', 'prof.moore@example.com', 'IET', 'Office J');
 --
 -- Adding 10 records to the Semester table
 INSERT INTO Semester(semester_code, start_date, end_date) VALUES
@@ -169,7 +169,8 @@ INSERT INTO GradPlan_Course(plan_id, semester_code, course_id) VALUES
 (8, 'S24R1', 8),
 (9, 'S24R2', 9),
 (10, 'S24', 10);
-
+select * from Student_Instructor_Course_take
+select * from MakeUp_Exam
 -- Adding 10 records to the Request table
 INSERT INTO Request (type, comment, status, credit_hours, course_id, student_id, advisor_id) VALUES 
 ( 'course', 'Request for additional course', 'pending', null, 1, 1, 2),

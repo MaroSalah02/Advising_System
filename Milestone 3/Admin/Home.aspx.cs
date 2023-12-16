@@ -372,6 +372,19 @@ namespace Milestone_3.Admin
             }
         }
 
+        protected void fetchActiveStudents(object sender, EventArgs e)
+        {
+            Response.Redirect("activeStudent.aspx");
+        }
+        protected void viewGradPlans(object sender, EventArgs e)
+        {
+            Response.Redirect("GraduationPlans.aspx");
+        }
+        protected void viewTranscripts(object sender, EventArgs e)
+        {
+            Response.Redirect("Transcript.aspx");
+        }
+
         protected void BackToLogin(object sender, EventArgs e)
         {
             Session["id"] = null;

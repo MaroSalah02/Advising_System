@@ -14,7 +14,7 @@
                 selectcommand="SELECT exam_id as [Exam ID], date as [Date], type as [Type],
                 course_id as [Course ID], name as [Course Name], semester as [Semester]
                 FROM Courses_MakeupExams ORDER BY exam_id"
-                connectionstring="<%$ connectionStrings:Server %>" runat="server"/>
+                connectionstring="<%$ connectionStrings:con %>" runat="server"/>
 
             <asp:gridview id="makeupTable" datasourceid="makeupData" autogeneratecolumns="True"
                 emptydatatext="No Data" allowpaging="True" pagesize="10" runat="server"
