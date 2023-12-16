@@ -58,12 +58,12 @@
                 <div>
                     <asp:TextBox ID="type" runat="server" placeHolder="Exam Type"></asp:TextBox>
                     <asp:TextBox ID="date" runat="server" type="datetime-local"></asp:TextBox>
-                    <asp:TextBox ID="courseID" runat="server" placeHolder="Course ID"></asp:TextBox>
-                    <asp:Button ID="Button1" runat="server" Text="Add Exam" />
+                    <asp:TextBox ID="courseID" runat="server" placeHolder="Course ID" type="number" min="0"></asp:TextBox>
+                    <asp:Button ID="Button1" runat="server" Text="Add Exam" OnClick="addExam" />
                 </div>
                 <label>Issue Installments of a Certain Payment</label>
                 <div>
-                    <asp:TextBox ID="payment_id" runat="server" placeholder="Payment ID"></asp:TextBox>
+                    <asp:TextBox ID="payment_id" runat="server" placeholder="Payment ID" type="number"></asp:TextBox>
                     <asp:Button ID="payment" runat="server" Text="Issue Installments" OnClick="issuePayment" />
                 </div>
             </div>
@@ -102,12 +102,12 @@
         <div>
             <label>Delete a course along with its related slots</label>
             <div>
-                <asp:TextBox ID="c_id" runat="server" placeholder="Course ID"></asp:TextBox>
+                <asp:TextBox ID="c_id" runat="server" placeholder="Course ID" type="number" min="0"></asp:TextBox>
                 <asp:Button ID="delete" runat="server" Text="Delete Course & Slots" OnClick="deleteCourse" />
             </div>
             <label>Delete a slot of a certain course</label>
             <div>
-                <asp:TextBox ID="semster_id" runat="server" placeholder="Course ID"></asp:TextBox>
+                <asp:TextBox ID="semster_id" runat="server" placeholder="Semester Code"></asp:TextBox>
                 <asp:Button ID="del" runat="server" Text="Delete Slot" OnClick="deleteSlot" />
             </div>
         </div>
@@ -116,7 +116,7 @@
         <div>
             <label>Update Student Financial Status</label>
             <div>
-                <asp:TextBox ID="studen_financial" runat="server" placeholder="Student ID"></asp:TextBox>
+                <asp:TextBox ID="studen_financial" runat="server" placeholder="Student ID" type="number" min="0"></asp:TextBox>
                 <asp:Button ID="Button3" runat="server" Text="Update" OnClick="updateStatus" />
             </div>
         </div>

@@ -52,13 +52,29 @@ namespace Milestone_3.Admin
             SqlConnection connection = new SqlConnection(connectionString);
 
             SqlCommand delete = new SqlCommand("Procedures_AdminDeleteCourse", connection);
-            int id = Int16.Parse(c_id.Text);
-            delete.CommandType = CommandType.StoredProcedure;
-            delete.Parameters.Add(new SqlParameter("@courseID", id));
-            connection.Open();
-            delete.ExecuteNonQuery();
-            connection.Close();
-            Response.Write("done");
+            try
+            {
+                int id = Int16.Parse(c_id.Text);
+                delete.CommandType = CommandType.StoredProcedure;
+                delete.Parameters.Add(new SqlParameter("@courseID", id));
+                connection.Open();
+                delete.ExecuteNonQuery();
+                connection.Close();
+                string script = "alert('Successful');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+
+            }
+            catch(FormatException)
+            {
+                string script = "alert('Failure, The provided field was left empty, please try again');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+
+            }
+
+
+  
+           
+
         }
         protected void deleteSlot(object sender, EventArgs e)
         {
@@ -66,14 +82,26 @@ namespace Milestone_3.Admin
             SqlConnection connection = new SqlConnection(connectionString);
 
             SqlCommand delete = new SqlCommand("Procedures_AdminDeleteSlots", connection);
-            int id = Int16.Parse(semster_id.Text);
-            delete.CommandType = CommandType.StoredProcedure;
-            delete.Parameters.Add(new SqlParameter("@current_semester", id));
-            connection.Open();
-            delete.ExecuteNonQuery();
-            connection.Close();
-            Response.Write("done");
+          
+                String id = semster_id.Text;
+            if (id.Length > 0)
+            {
+                delete.CommandType = CommandType.StoredProcedure;
+                delete.Parameters.Add(new SqlParameter("@current_semester", id));
+                connection.Open();
+                delete.ExecuteNonQuery();
+                connection.Close();
+                string script = "alert('Successful');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+            }
+            else { 
+                string script = "alert('Failure, The provided field was left empty, please try again');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+                    }
+
         }
+
+
         protected void addExam(object sender, EventArgs e)
         {
             string connectionString = WebConfigurationManager.ConnectionStrings["con"].ToString();
@@ -81,19 +109,47 @@ namespace Milestone_3.Admin
 
             SqlCommand add = new SqlCommand("Procedures_AdminAddExam", connection);
             String Type = type.Text;
-            String date_time = date.Text;
-            int id = Int16.Parse(courseID.Text);
-            add.CommandType = CommandType.StoredProcedure;
-            add.Parameters.Add(new SqlParameter("@Type", Type));
-            add.Parameters.Add(new SqlParameter("@date", date_time));
-            add.Parameters.Add(new SqlParameter("@courseID", id));
-            connection.Open();
-            add.ExecuteNonQuery();
-            connection.Close();
-            Response.Write("done");
+            String date_time = date.Text.Replace("T"," ");
+            if (Type.Length == 0 || date_time.Length == 0)
+            {
+
+                string script = "alert('Failure, The provided field(s) was left empty, please try again');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+            }
+            else if (DateTime.Parse(date_time) < DateTime.Now)
+            {
+
+                string script = "alert('You cannot create exam in the past');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+            }
+            else
+            {
+             
+                try
+                {
+                    int id = Int16.Parse(courseID.Text);
+                    add.CommandType = CommandType.StoredProcedure;
+                    add.Parameters.Add(new SqlParameter("@courseID", id));
+                    add.Parameters.Add(new SqlParameter("@date", date_time));
+                    add.Parameters.Add(new SqlParameter("@Type", Type));
+                    connection.Open();
+                    add.ExecuteNonQuery();
+                    //Response.Write(date_time);
+                    connection.Close();
+                    string script = "alert('Successful');";
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+                }
+                catch (FormatException)
+                {
+                   
+                    string script = "alert('Failure, The provided field(s) was left empty, please try again');";
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+                }
+            }
         }
 
-        protected void viewPayments(object sender, EventArgs e)
+
+            protected void viewPayments(object sender, EventArgs e)
         {
             Response.Redirect("Payments.aspx");
         }
@@ -103,13 +159,28 @@ namespace Milestone_3.Admin
             SqlConnection connection = new SqlConnection(connectionString);
 
             SqlCommand issue = new SqlCommand("Procedures_AdminIssueInstallment", connection);
-            int id = Int16.Parse(payment_id.Text);
-            issue.CommandType = CommandType.StoredProcedure;
-            issue.Parameters.Add(new SqlParameter("@payment_id", id));
-            connection.Open();
-            issue.ExecuteNonQuery();
-            connection.Close();
-            Response.Write("done");
+            try
+            {
+                int id = Int16.Parse(payment_id.Text);
+                issue.CommandType = CommandType.StoredProcedure;
+                issue.Parameters.Add(new SqlParameter("@payment_id", id));
+                connection.Open();
+                issue.ExecuteNonQuery();
+                connection.Close();
+                string script = "alert('Successful  ');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+            }
+            catch (FormatException)
+            {
+                string script = "alert('Failure, The provided field(s) was left empty, please try again');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+            }
+            catch (OverflowException)
+            {
+                string script = "alert('Failure, The provided is too large, please try again');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+            }
+           
         }
 
         protected void updateStatus(object sender, EventArgs e)
@@ -118,13 +189,27 @@ namespace Milestone_3.Admin
             SqlConnection connection = new SqlConnection(connectionString);
 
             SqlCommand update = new SqlCommand("FN_AdminCheckStudentStatus", connection);
-            int id = Int16.Parse(studen_financial.Text);//TODO : change to student id
-            update.CommandType = CommandType.StoredProcedure;
-            update.Parameters.Add(new SqlParameter("@Student_id", id));
-            connection.Open();
-            update.ExecuteNonQuery();
-            connection.Close();
-            Response.Write("done");
+            try
+            {
+                int id = Int16.Parse(studen_financial.Text);//TODO : change to student id   
+                update.CommandType = CommandType.StoredProcedure;
+                update.Parameters.Add(new SqlParameter("@Student_id", id));
+                connection.Open();
+                update.ExecuteNonQuery();
+                connection.Close();
+                string script = "alert('Successful');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+            }
+            catch (FormatException)
+            {
+                string script = "alert('Failure, The provided field(s) was left empty, please try again');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+            }
+            catch (OverflowException)
+            {
+                string script = "alert('Failure, The provided is too large, please try again');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+            }
         }
 
         protected void addSemester(object sender, EventArgs e)
