@@ -77,10 +77,19 @@
     <Content Include="Advisor\Advisor.aspx" />
     <Content Include="Login\Login.aspx" />
     <Content Include="Advisor\Advisor.css" />
-    <Content Include="Admin\Payments.aspx" />
+<<<<<<< Updated upstream
     <Content Include="Student\studentCoursesMenu.aspx" />
     <Content Include="Student\studentMainMenu.aspx" />
     <Content Include="Student\updateStudentInfo.aspx" />
+=======
+<<<<<<< HEAD
+    <Content Include="Admin\Payments.aspx" />
+=======
+    <Content Include="Student\studentCoursesMenu.aspx" />
+    <Content Include="Student\studentMainMenu.aspx" />
+    <Content Include="Student\updateStudentInfo.aspx" />
+>>>>>>> 6827f48c6afd9b0030bd7431907637cbb552755d
+>>>>>>> Stashed changes
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
