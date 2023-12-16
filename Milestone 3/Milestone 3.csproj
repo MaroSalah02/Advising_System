@@ -70,6 +70,7 @@
     <Content Include="Admin\activeStudent.aspx" />
     <Content Include="Admin\Home.aspx" />
     <Content Include="Admin\InstructorsWithCourses.aspx" />
+    <Content Include="Admin\NewRegister.aspx" />
     <Content Include="Admin\SemesterWithCourses.aspx" />
     <Content Include="Admin\TempHome.aspx" />
     <Content Include="Admin\ViewAdvisors.aspx" />
@@ -109,6 +110,13 @@
     </Compile>
     <Compile Include="Admin\InstructorsWithCourses.aspx.designer.cs">
       <DependentUpon>InstructorsWithCourses.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\NewRegister.aspx.cs">
+      <DependentUpon>NewRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\NewRegister.aspx.designer.cs">
+      <DependentUpon>NewRegister.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\SemesterWithCourses.aspx.cs">
       <DependentUpon>SemesterWithCourses.aspx</DependentUpon>
