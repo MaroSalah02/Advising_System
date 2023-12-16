@@ -78,6 +78,10 @@
     <Content Include="Login\Login.aspx" />
     <Content Include="Advisor\Advisor.css" />
     <Content Include="Admin\Payments.aspx" />
+    <Content Include="Student2\Courses.aspx" />
+    <Content Include="Student2\Graduation.aspx" />
+    <Content Include="Student2\MakeUp.aspx" />
+    <Content Include="Student2\Slots.aspx" />
     <Content Include="Student\studentCoursesMenu.aspx" />
     <Content Include="Student\studentMainMenu.aspx" />
     <Content Include="Student\updateStudentInfo.aspx" />
@@ -155,6 +159,34 @@
       <DependentUpon>Payments.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Student2\Courses.aspx.cs">
+      <DependentUpon>Courses.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Student2\Courses.aspx.designer.cs">
+      <DependentUpon>Courses.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Student2\Graduation.aspx.cs">
+      <DependentUpon>Graduation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Student2\Graduation.aspx.designer.cs">
+      <DependentUpon>Graduation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Student2\MakeUp.aspx.cs">
+      <DependentUpon>MakeUp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Student2\MakeUp.aspx.designer.cs">
+      <DependentUpon>MakeUp.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Student2\Slots.aspx.cs">
+      <DependentUpon>Slots.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Student2\Slots.aspx.designer.cs">
+      <DependentUpon>Slots.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Student\studentCoursesMenu.aspx.cs">
       <DependentUpon>studentCoursesMenu.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
