@@ -16,7 +16,11 @@ namespace Milestone_3.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string connectionString = WebConfigurationManager.ConnectionStrings["MainConnection"].ToString();
+            if (Session["id"] == null || !Session["id"].Equals("-1"))
+            {
+                Response.Redirect("~/Login/Login.aspx");
+            }
+            string connectionString = WebConfigurationManager.ConnectionStrings["con"].ToString();
             SqlConnection connection = new SqlConnection(connectionString);
 
             SqlCommand retriveStudentWithAdvisors = new SqlCommand("AdminListStudentsWithAdvisors", connection);

@@ -15,7 +15,11 @@ namespace Milestone_3.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            String ConnectionString = ConfigurationManager.ConnectionStrings["MainConnection"].ToString();
+            if (Session["id"] == null || !Session["id"].Equals("-1"))
+            {
+                Response.Redirect("~/Login/Login.aspx");
+            }
+            String ConnectionString = ConfigurationManager.ConnectionStrings["con"].ToString();
             SqlConnection connection = new SqlConnection(ConnectionString);
 
             SqlCommand retrieveInstructorsWithCourses = new SqlCommand("SELECT * FROM Instructors_AssignedCourses", connection);

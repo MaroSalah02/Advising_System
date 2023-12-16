@@ -71,6 +71,7 @@
     <Content Include="Admin\Admin_Stylesheet.css" />
     <Content Include="Admin\InstructorsWithCourses.aspx" />
     <Content Include="Admin\SemesterWithCourses.aspx" />
+    <Content Include="Admin\TempHome.aspx" />
     <Content Include="Admin\ViewAdvisors.aspx" />
     <Content Include="Admin\ViewPendingRequests.aspx" />
     <Content Include="Admin\ViewStudentsWithAdvisors.aspx" />
@@ -103,6 +104,13 @@
     </Compile>
     <Compile Include="Admin\SemesterWithCourses.aspx.designer.cs">
       <DependentUpon>SemesterWithCourses.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\TempHome.aspx.cs">
+      <DependentUpon>TempHome.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\TempHome.aspx.designer.cs">
+      <DependentUpon>TempHome.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\ViewAdvisors.aspx.cs">
       <DependentUpon>ViewAdvisors.aspx</DependentUpon>
