@@ -79,16 +79,11 @@
     <Content Include="Admin\GraduationPlans.aspx" />
     <Content Include="Login\Login.aspx" />
     <Content Include="Advisor\Advisor.css" />
-<<<<<<< Updated upstream
     <Content Include="Admin\Payments.aspx" />
     <Content Include="Student2\Courses.aspx" />
     <Content Include="Student2\Graduation.aspx" />
     <Content Include="Student2\MakeUp.aspx" />
     <Content Include="Student2\Slots.aspx" />
-=======
-    <Content Include="Student\sendingCourseRequest.aspx" />
-    <Content Include="Student\sendingCreditRequest.aspx" />
->>>>>>> Stashed changes
     <Content Include="Student\studentCoursesMenu.aspx" />
     <Content Include="Student\studentMainMenu.aspx" />
     <Content Include="Student\updateStudentInfo.aspx" />
@@ -179,7 +174,6 @@
       <DependentUpon>Payments.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-<<<<<<< Updated upstream
     <Compile Include="Student2\Courses.aspx.cs">
       <DependentUpon>Courses.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -207,21 +201,6 @@
     </Compile>
     <Compile Include="Student2\Slots.aspx.designer.cs">
       <DependentUpon>Slots.aspx</DependentUpon>
-=======
-    <Compile Include="Student\sendingCourseRequest.aspx.cs">
-      <DependentUpon>sendingCourseRequest.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Student\sendingCourseRequest.aspx.designer.cs">
-      <DependentUpon>sendingCourseRequest.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Student\sendingCreditRequest.aspx.cs">
-      <DependentUpon>sendingCreditRequest.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Student\sendingCreditRequest.aspx.designer.cs">
-      <DependentUpon>sendingCreditRequest.aspx</DependentUpon>
->>>>>>> Stashed changes
     </Compile>
     <Compile Include="Student\studentCoursesMenu.aspx.cs">
       <DependentUpon>studentCoursesMenu.aspx</DependentUpon>

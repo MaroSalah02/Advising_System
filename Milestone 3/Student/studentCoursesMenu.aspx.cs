@@ -15,26 +15,21 @@ namespace Milestone_3.Student
         static String connectstr = WebConfigurationManager.ConnectionStrings["con"].ToString();
         static SqlConnection sqlConnection = new SqlConnection(connectstr);
         int studentId;
-        int currentSemester;
-        string currentSemesterCode;
-
+        int currentSemesterCode;
         protected void Page_Load(object sender, EventArgs e)
-        {  
+        {
             studentId = (int)Session["id"];
-            currentSemesterCode = getCurrentSemesterCode();
             getStudentOptionalCourses(studentId);
             getStudentAvailableCourses(studentId);
-            getStudentRequiredCourses(studentId);
-            getStudentMissingCourses(studentId);
-
-            //getStudentAvailableCourses(studentId);
 
         }
         private void getStudentOptionalCourses(int id)
         {
             SqlDataReader reader;
             string numbers = "";
-            
+            String connectstr = WebConfigurationManager.ConnectionStrings["con"].ToString();
+            SqlConnection c = new SqlConnection(connectstr);
+
             if (sqlConnection.State == ConnectionState.Closed)
                 sqlConnection.Open();
 
@@ -43,7 +38,7 @@ namespace Milestone_3.Student
 
             sqlCommand.Parameters.AddWithValue("@StudentID", id);
 
-            sqlCommand.Parameters.AddWithValue("@current_semester_code", currentSemesterCode);
+            sqlCommand.Parameters.AddWithValue("@current_semester_code", getStudentCurrentSemester(id));
             sqlCommand.ExecuteNonQuery();
 
             DataTable dataTable = new DataTable();
@@ -52,6 +47,7 @@ namespace Milestone_3.Student
             sqlConnection.Close();
             optionalCourses.DataSource = dataTable;
             optionalCourses.DataBind();
+            c.Close();
 
         }
 
@@ -64,7 +60,7 @@ namespace Milestone_3.Student
             if (sqlConnection.State == ConnectionState.Closed)
                 sqlConnection.Open();
 
-            String query = "select * from dbo.FN_SemsterAvailableCourses('" + currentSemesterCode + "')";
+            String query = "select dbo.FN_SemsterAvailableCourses(" + getStudentCurrentSemester(id)+")";
             SqlCommand func = new SqlCommand(query, c);
 
             DataTable dataTable = new DataTable();
@@ -78,82 +74,35 @@ namespace Milestone_3.Student
         }
         private int getStudentCurrentSemester(int id)
         {
-            if (sqlConnection.State == ConnectionState.Closed)
-                sqlConnection.Open();
 
+            String connectstr = WebConfigurationManager.ConnectionStrings["con"].ToString();
+            SqlConnection c = new SqlConnection(connectstr);
 
             String query = "select semester from Student Where student_id = " + id;
-            SqlCommand func = new SqlCommand(query, sqlConnection);
+            SqlCommand func = new SqlCommand(query, c);
 
-            currentSemester = Convert.ToInt32(func.ExecuteScalar());
-            sqlConnection.Close();
-            return currentSemester;
-
-        }
-
-        private string getCurrentSemesterCode()
-        {
-            if (sqlConnection.State == ConnectionState.Closed)
-                sqlConnection.Open();
-
-            DateTime currentDate = DateTime.Now.Date;
-
-            String query = "select semester_code from Semester Where start_date<= '" + currentDate +"' AND end_date >= '"+ currentDate+"'";
-            SqlCommand func = new SqlCommand(query, sqlConnection);
-
-            currentSemesterCode = Convert.ToString(func.ExecuteScalar());
-            sqlConnection.Close();
+            c.Open();
+            currentSemesterCode = Convert.ToInt32(func.ExecuteScalar());
+            c.Close();
             return currentSemesterCode;
 
         }
-        private void getStudentRequiredCourses(int id)
+
+        private int getSCurrentSemesterCode(int id)
         {
-            SqlDataReader reader;
-            string numbers = "";
 
-            if (sqlConnection.State == ConnectionState.Closed)
-                sqlConnection.Open();
+            String connectstr = WebConfigurationManager.ConnectionStrings["con"].ToString();
+            SqlConnection c = new SqlConnection(connectstr);
+            DateTime currentDate = DateTime.Now.Date;
 
-            SqlCommand sqlCommand = new SqlCommand("Procedures_ViewRequiredCourses", sqlConnection);
-            sqlCommand.CommandType = CommandType.StoredProcedure;
+            String query = "select semester from Semester Where student_id = " + id;
+            SqlCommand func = new SqlCommand(query, c);
 
-            sqlCommand.Parameters.AddWithValue("@StudentID", id);
-
-            sqlCommand.Parameters.AddWithValue("@current_semester_code", currentSemesterCode);
-            sqlCommand.ExecuteNonQuery();
-
-            DataTable dataTable = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter(sqlCommand);
-            adapter.Fill(dataTable);
-            sqlConnection.Close();
-            requiredCourses.DataSource = dataTable;
-            requiredCourses.DataBind();
+            c.Open();
+            currentSemesterCode = Convert.ToInt32(func.ExecuteScalar());
+            c.Close();
+            return currentSemesterCode;
 
         }
-
-        private void getStudentMissingCourses(int id)
-        {
-            SqlDataReader reader;
-            string numbers = "";
-
-            if (sqlConnection.State == ConnectionState.Closed)
-                sqlConnection.Open();
-
-            SqlCommand sqlCommand = new SqlCommand("Procedures_ViewMS", sqlConnection);
-            sqlCommand.CommandType = CommandType.StoredProcedure;
-
-            sqlCommand.Parameters.AddWithValue("@StudentID", id);
-
-            sqlCommand.ExecuteNonQuery();
-
-            DataTable dataTable = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter(sqlCommand);
-            adapter.Fill(dataTable);
-            sqlConnection.Close();
-            missingCourses.DataSource = dataTable;
-            missingCourses.DataBind();
-
-        }
-        
     }
 }
