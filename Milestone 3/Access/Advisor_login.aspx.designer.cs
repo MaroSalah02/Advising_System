@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Milestone_3
+namespace Milestone_3.Access
 {
 
 
-    public partial class Login
+    public partial class Advisor_login
     {
 
         /// <summary>
@@ -51,12 +51,12 @@ namespace Milestone_3
         protected global::System.Web.UI.WebControls.Button Button1;
 
         /// <summary>
-        /// RadioButtonList1 control.
+        /// status control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList RadioButtonList1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl status;
     }
 }

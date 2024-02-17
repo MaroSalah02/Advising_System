@@ -67,6 +67,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Access\Advisor_login.aspx" />
+    <Content Include="Access\Student_login.aspx" />
     <Content Include="Admin\activeStudent.aspx" />
     <Content Include="Admin\Home.aspx" />
     <Content Include="Admin\InstructorsWithCourses.aspx" />
@@ -78,9 +80,17 @@
     <Content Include="Admin\ViewStudentsWithAdvisors.aspx" />
     <Content Include="Advisor\Advisor.aspx" />
     <Content Include="Admin\GraduationPlans.aspx" />
-    <Content Include="Login\Login.aspx" />
+    <Content Include="Home\Icons\Admin.png" />
+    <Content Include="Home\Icons\Advisor.png" />
+    <Content Include="Home\Home.css" />
+    <Content Include="Home\Home.aspx" />
     <Content Include="Advisor\Advisor.css" />
     <Content Include="Admin\Payments.aspx" />
+    <Content Include="Home\Icons\Portal.png" />
+    <Content Include="Home\Icons\Student.png" />
+    <Content Include="Access\Admin_login.aspx" />
+    <Content Include="Access\Styles\Style.css" />
+    <Content Include="Home\Redirect.js" />
     <Content Include="Student2\Courses.aspx" />
     <Content Include="Student2\Graduation.aspx" />
     <Content Include="Student2\MakeUp.aspx" />
@@ -92,6 +102,20 @@
     <Content Include="Student\updateStudentInfo.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Access\Advisor_login.aspx.cs">
+      <DependentUpon>Advisor_login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Access\Advisor_login.aspx.designer.cs">
+      <DependentUpon>Advisor_login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Access\Student_login.aspx.cs">
+      <DependentUpon>Student_login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Access\Student_login.aspx.designer.cs">
+      <DependentUpon>Student_login.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\activeStudent.aspx.cs">
       <DependentUpon>activeStudent.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -169,12 +193,12 @@
     <Compile Include="Admin\GraduationPlans.aspx.designer.cs">
       <DependentUpon>GraduationPlans.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Login\Login.aspx.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
+    <Compile Include="Home\Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Login\Login.aspx.designer.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
+    <Compile Include="Home\Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Payments.aspx.cs">
       <DependentUpon>Payments.aspx</DependentUpon>
@@ -182,6 +206,13 @@
     </Compile>
     <Compile Include="Admin\Payments.aspx.designer.cs">
       <DependentUpon>Payments.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Access\Admin_login.aspx.cs">
+      <DependentUpon>Admin_login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Access\Admin_login.aspx.designer.cs">
+      <DependentUpon>Admin_login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Student2\Courses.aspx.cs">

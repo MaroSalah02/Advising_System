@@ -59,15 +59,15 @@ body {
     color: #e8e8e8;
 }
 
-    .Text_Box:focus {
-        outline-color: white;
-        background-color: #212121;
-        box-shadow: 5px 5px #888888;
-    }
+.Text_Box:focus {
+    outline-color: white;
+    background-color: #212121;
+    box-shadow: 5px 5px #888888;
+}
 
-    .Text_Box::placeholder {
-        color: wheat;
-    }
+.Text_Box::placeholder {
+    color: wheat;
+}
 
 .inputs_div {
     display: flex;
@@ -89,10 +89,10 @@ body {
     cursor: pointer;
 }
 
-    .btns:hover {
-        background-color: limegreen;
-        transition: 0.5s ease;
-    }
+.btns:hover {
+    background-color: limegreen;
+    transition: 0.5s ease;
+}
 
 .reset_button {
     width: 5%;
@@ -103,10 +103,10 @@ body {
     align-self: center;
 }
 
-    .reset_button:hover {
-        background-color: red;
-        transition: 0.5s ease;
-    }
+.reset_button:hover {
+    background-color: red;
+    transition: 0.5s ease;
+}
 
 footer {
     position: fixed;
