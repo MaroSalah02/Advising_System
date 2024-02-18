@@ -1,0 +1,98 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: black;
+    font-weight: bold;
+}
+
+body {
+    background-color: #F5F5F5;
+}
+.container {
+    display: flex;
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20%;
+    height: 100vh;
+    background-color: #6C88A4;
+    left: 0;
+    flex-wrap: wrap;
+}
+
+.dashboard img {
+    width: 50%;
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+
+.elements {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.elements p {
+    text-align :center;
+}
+
+.select {
+    width: 100%;
+    text-align:center;
+    padding: 10px;
+    background-color: grey;
+}
+
+.drop_down_menu {
+    text-align: center;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.view {
+    display:flex;
+    flex-direction:column;
+}
+
+#View_Students {
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.Text_Box {
+    text-align: center;
+    width: 30%;
+    border: 2px solid #e8e8e8;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.inputs_div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 10px;
+    margin-top: 10px;
+    width: 70%;
+    font-size: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+footer {
+    text-align: center;
+    font-size: 20px;
+    margin-top: auto;
+    padding: 10px;
+}
+
+footer span {
+    color: #CF0DC9;
+}

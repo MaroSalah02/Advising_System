@@ -425,11 +425,11 @@ namespace Milestone_3
                 accept_or_reject();
             }
         }
-        protected void Reset_Click(object sender, EventArgs e)
-        {
-            Response.Redirect(Request.RawUrl, false);
-            Context.ApplicationInstance.CompleteRequest();
-        }
+        //protected void Reset_Click(object sender, EventArgs e)
+        //{
+        //    Response.Redirect(Request.RawUrl, false);
+        //    Context.ApplicationInstance.CompleteRequest();
+        //}
         private String get_name(int id)
         {
             String connectstr = WebConfigurationManager.ConnectionStrings["con"].ToString();
@@ -441,8 +441,8 @@ namespace Milestone_3
             c.Open();
                 Object r = func.ExecuteScalar();
                 String advisorName = r.ToString();
-                return advisorName;
             c.Close();
+            return advisorName;
         }
         private void alert()
         {

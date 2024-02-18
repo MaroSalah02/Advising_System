@@ -80,11 +80,12 @@
     <Content Include="Admin\ViewStudentsWithAdvisors.aspx" />
     <Content Include="Advisor\Advisor.aspx" />
     <Content Include="Admin\GraduationPlans.aspx" />
+    <Content Include="Advisor\style.css" />
+    <Content Include="Advisor\user.png" />
     <Content Include="Home\Icons\Admin.png" />
     <Content Include="Home\Icons\Advisor.png" />
     <Content Include="Home\Home.css" />
     <Content Include="Home\Home.aspx" />
-    <Content Include="Advisor\Advisor.css" />
     <Content Include="Admin\Payments.aspx" />
     <Content Include="Home\Icons\Portal.png" />
     <Content Include="Home\Icons\Student.png" />
